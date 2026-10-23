@@ -34,6 +34,12 @@ beschreibt Mechanismen und Muster, keine offenen Schwachstellen und keine Berech
 Referenzsystems. Werkzeuge und Dienste sind beim Namen genannt, weil man sie für einen Nachbau
 braucht; keiner davon ist eine Empfehlung gegen Alternativen.
 
+## Lizenz
+
+CC BY 4.0 (Creative Commons Namensnennung 4.0 International), Text und Code zusammen; der Wortlaut
+liegt in `LICENSE`. Nachbauen, ändern und weitergeben ist erlaubt, auch gewerblich, mit Nennung dieses
+Repositorys als Quelle.
+
 ## Herkunft
 
 Dieses Repository wird aus der Quelle des Lehrgangs erzeugt und nie von Hand gepflegt. Jeder
