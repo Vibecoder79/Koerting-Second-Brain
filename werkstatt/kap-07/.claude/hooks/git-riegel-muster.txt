@@ -1,0 +1,5 @@
+# Ein regulaerer Ausdruck je Zeile, TAB, der Grund.
+(^|[;&|]\s*)git(\s+-C\s+("[^"]*"|'[^']*'|\S+))*\s+add\s+(-A\b|--all\b|\.(\s|$)|-u\b)	Gezielt hinzufuegen, nie pauschal: In dieser Arbeitskopie schreiben Jobs und Sitzungen gleichzeitig.
+(^|[;&|]\s*)git(\s+-C\s+("[^"]*"|'[^']*'|\S+))*\s+commit\b(?![^;&|]*\s--\s)	Ein Commit ohne Pfadangabe nimmt mit, was ein anderer vorgemerkt hat, auch mit --amend: git commit -m "…" -- <pfad>.
+(^|[;&|]\s*)git(\s+-C\s+("[^"]*"|'[^']*'|\S+))*\s+push\b[^;&|]*(\s-f\b|\s--force\b)	Kein erzwungenes Pushen: main ist die Nabe fuer alle Klone.
+(^|[;&|]\s*)rm\s+(-\S+\s+)*("|')?(\d\d\s[A-ZÄÖÜ]|/opt/vault/)	Loeschen im Vault entscheidet der Eigner: erst fragen, dann loeschen.

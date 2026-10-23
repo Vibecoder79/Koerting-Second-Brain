@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Prueftor: faehrt alle Proben. Eine rote Probe verhindert den Commit.
+set -u
+rot=0
+for probe in tests/*_probe.py; do
+  [ -e "$probe" ] || continue
+  if ! python3 "$probe" >/dev/null 2>&1; then
+    echo "ROT: $probe" >&2
+    rot=1
+  fi
+done
+exit "$rot"

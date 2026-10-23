@@ -1,0 +1,9 @@
+# Was nach einem Neustart aktiv ausgeloest wird. Eine Zeile je Dienst.
+name	art	ziel	soll
+git-nabe	befehl	git -C ${VAULT_BASIS}/repo/vault.git rev-parse --is-bare-repository	0
+vault-sperre	befehl	test -e ${VAULT_BASIS}/vault-schreiben.lock && flock -n ${VAULT_BASIS}/vault-schreiben.lock true	0
+cron	befehl	pgrep -x cron	0
+privates-netz	befehl	tailscale status	0
+lebenszeichen	datei	${VAULT_BASIS}/heartbeats	vorhanden
+kein-dienst-auf-8080	port	8080	zu,referenz=8733
+unbekannt	port	9999	zu

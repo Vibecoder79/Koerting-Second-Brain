@@ -1,0 +1,4 @@
+name	max_stunden	takt	beschreibung	konto
+zaehlen	26	taeglich 04:05	Zaehlt die Notizen je Baum und schreibt die Tabelle ins Vault	jobs
+abholen	2	stuendlich	Holt Protokolle beim Transkriptionsdienst ab (geplant, noch nicht gebaut)	jobs
+bericht	26	taeglich 06:00	Vergleicht Register und Lebenszeichen, gibt die Tageszeile aus	arbeit

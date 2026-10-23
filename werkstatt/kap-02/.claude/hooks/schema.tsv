@@ -1,0 +1,20 @@
+# Datenkopf-Schema: eine Zeile je Sorte und Feld. Drei Leser, eine Datei.
+# pflicht: alle | hub | empfohlen | eigner | job
+#   alle       jede Datei der Sorte; ein Mechanismus darf ergaenzen
+#   hub        nur die Einstiegsdatei einer Sorte (der Hub eines Projekts)
+#   empfohlen  Hinweis, kein Befund
+#   eigner     Bedeutungsurteil; nur der Eigner setzt es, die Wache meldet das Fehlen
+#   job        setzt nur ein Job, nie von Hand
+# werte: abschliessende Liste mit |, JJJJ-MM-TT fuer ein Datum, - fuer frei
+sorte	feld	pflicht	werte	bemerkung
+*	source	alle	-	Ohne Herkunft ist unbekannt, wer geschrieben hat
+*	erstellt	empfohlen	JJJJ-MM-TT	Wann die Notiz entstand
+*	layer	empfohlen	roh|curated	Kontext fuer Modelle kommt aus der kuratierten Schicht
+*	provenance.origin	job	-	Fremdinhalt muss maschinell als Daten erkennbar sein
+inbox	typ	eigner	notiz|aufgabe	Ohne typ ist eine Aufgabe fuer den Abgleich unsichtbar
+aufgabe	status	alle	offen|vertagt|erledigt	Der Abgleich mit dem Aufgaben-Werkzeug darf erledigt setzen, nachdem der Mensch es dort entschieden hat
+aufgabe	faellig	empfohlen	JJJJ-MM-TT	Ein Datum in der Zukunft bleibt liegen
+projekt-hub	meeting_key	hub	-	Ohne Kuerzel landet jedes Protokoll im Warteraum
+projekt-hub	status	hub	aktiv|pausiert|abgeschlossen	Die Vorlage setzt aktiv beim Anlegen; jede Aenderung ist ein Eigner-Entscheid
+projekt-hub	start	hub	JJJJ-MM-TT	Beginn; das Datum steht im Feld, nicht im Ordnernamen
+projekt-hub	ende	hub	JJJJ-MM-TT|offen	offen, solange kein Datum feststeht

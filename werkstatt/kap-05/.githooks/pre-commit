@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Prueftor des Vaults: Geheimnis im Dateinamen, Schluessel im Inhalt (gitleaks), Groesse, Ziel.
+# Keine Begriffslisten fuer heikle Inhalte: Die waeren der Sync-Stopp, der gefaehrlicher ist
+# als das, wogegen er schuetzt.
+set -uo pipefail
+MAX_MB=25
+GEHEIM='\.env($|\.)|id_rsa|id_ed25519|\.pem$|\.p12$|\.kdbx$|(^|/)\.netrc$|secrets?\.(ya?ml|json|txt|env)$|credentials?\.(ya?ml|json)$'
+# In einer eckigen Klammer von grep -E ist \w kein Wortzeichen; die POSIX-Klasse [[:alnum:]] ist es
+ERLAUBTE_ZIELE='^(/opt/vault/repo/|[[:alnum:]_.-]+@wissen:|\.\./)'   # eigener Server oder lokaler Pfad
+rot=0
+while IFS= read -r -d '' datei; do
+  if printf '%s' "$datei" | grep -Eq "$GEHEIM"; then echo "GATE: Geheimnis-Muster: $datei"; rot=1; fi
+  gross=$(git cat-file -s ":$datei" 2>/dev/null || echo 0)
+  [ "$gross" -gt $((MAX_MB * 1024 * 1024)) ] && { echo "GATE: ueber ${MAX_MB} MB: $datei"; rot=1; }
+done < <(git diff --cached --name-only -z --diff-filter=AM)
+# Schluessel im Inhalt: die Muster des Scanners gitleaks fuer Token-Formen bekannter Dienste
+GITLEAKS="${GITLEAKS:-gitleaks}"   # fuer die Probe auf einen Pfad setzbar, den es nicht gibt
+if command -v "$GITLEAKS" >/dev/null 2>&1; then
+  "$GITLEAKS" protect --staged --no-banner --redact >/dev/null 2>&1 || { echo "GATE: gitleaks meldet einen Schluessel im vorgemerkten Inhalt"; rot=1; }
+else
+  echo "GATE: gitleaks fehlt, Inhalte nicht pruefbar"; rot=1   # ungeprueft gilt nicht als sauber
+fi
+# Ziel pruefen: jedes Remote muss auf den eigenen Server zeigen
+while read -r name url _; do
+  printf '%s' "$url" | grep -Eq "$ERLAUBTE_ZIELE" || { echo "GATE: fremdes Ziel '$name' -> $url"; rot=1; }
+done < <(git remote -v | awk '$3=="(push)"')
+[ "$rot" -eq 0 ] || echo "GATE: Commit abgewiesen." >&2
+exit $rot

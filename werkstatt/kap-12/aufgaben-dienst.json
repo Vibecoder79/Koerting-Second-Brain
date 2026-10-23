@@ -1,0 +1,7 @@
+[
+  {"titel": "Vertrag unterschreiben oder ablehnen", "faellig": "2026-10-22", "prioritaet": null, "art": "entscheidung", "quelle": "planner"},
+  {"titel": "Spesen einreichen", "faellig": "2026-10-23", "prioritaet": "niedrig", "quelle": "todo"},
+  {"titel": "Budget 2027 entscheiden", "faellig": "2026-10-28", "prioritaet": "wichtig", "art": "entscheidung", "quelle": "planner"},
+  {"titel": "Altlast ohne Datum", "faellig": null, "prioritaet": null, "quelle": "todo"},
+  {"titel": "Jahresplanung", "faellig": "2026-11-20", "prioritaet": "wichtig", "quelle": "planner"}
+]

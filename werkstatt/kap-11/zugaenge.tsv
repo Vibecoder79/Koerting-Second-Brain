@@ -1,0 +1,9 @@
+# Register der Zugaenge. Je Zeile ein Zugang, nie ein Wert. Liest zugaenge_pruefen.py.
+# art: datei (Schluessel auf dem Server) | sitzung (angemeldete Verbindung einer KI-Sitzung) | browser (Konto, nur im Browser)
+# ablauf: YYYY-MM-DD | unbekannt | keiner   -- bei keiner und art datei ist rotation Pflicht
+zugang	zweck	art	datei	leser	ablauf	rotation
+github-app	Code-Hosting: Installationen und Stundenzugang	datei	github-app.pem	github_zugang.py	keiner	2027-04-22
+bilddienst	Bilder bestellen	datei	bilddienst.env	bestellung.py	2026-12-01	-
+transkription	Meetings abholen	datei	transkription.env	abholer.py	unbekannt	-
+backlog-sitzung	Backlog-Werkzeug in Arbeitssitzungen	sitzung	-	-	2027-03-15	-
+dns-panel	Namen setzen, nur der Eigner	browser	-	-	keiner	-

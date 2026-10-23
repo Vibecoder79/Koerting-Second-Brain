@@ -1,0 +1,7 @@
+# Register der Traeger: die Mechanismen, die eine Grenze halten. stand: gebaut | geplant
+name	stand	beschreibung
+zaun	gebaut	Fremdinhalt wird vor dem Modellaufruf als Material markiert (Kapitel 8)
+ausfuehrer	gebaut	benannte Aktionen mit festen Feldern laufen im Backend, das Modell haelt keinen Schluessel
+kostendeckel	gebaut	Deckel je Lauf im Aufrufer, der Lauf haelt an
+stil-riegel	gebaut	Antwort wird gegen die Stilregeln geprueft, bevor sie rausgeht
+laufspur	geplant	der Aufrufer schreibt das Protokoll jedes Laufs

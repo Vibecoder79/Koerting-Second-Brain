@@ -1,0 +1,7 @@
+{
+  "preis_je_bild_usd": 0.25,
+  "preisbeleg": "Preisliste des Anbieters, gelesen am 22.10.2026; der Anbieter nennt je Auftrag keinen Preis",
+  "deckel_je_auftrag_usd": 1.00,
+  "dienst": "http://127.0.0.1:8732",
+  "erlaubte_hosts": ["127.0.0.1"]
+}

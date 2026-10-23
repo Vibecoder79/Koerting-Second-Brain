@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Haelt die Arbeitskopie an der Git-Nabe. Nur fast-forward: In der Arbeitskopie schreiben
+# nachts Jobs, ein automatisches Zusammenfuehren haette dort nichts zu suchen. Ein
+# Fehlschlag wird in der Ausgabe des Pushs gemeldet.
+#
+# Git setzt fuer den Hook GIT_DIR auf das nackte Repository. Ohne das unset arbeitet
+# jeder git-Befehl hier am falschen Verzeichnis und scheitert.
+unset GIT_DIR GIT_WORK_TREE GIT_QUARANTINE_PATH GIT_INDEX_FILE
+umask 002   # was der Hook schreibt, darf die Gruppe weiterschreiben
+WORK="${VAULT_WORK:-/opt/vault/work/vault}"
+
+while read -r _alt _neu ref; do
+  [ "$ref" = "refs/heads/main" ] || continue
+  if AUSGABE=$(git -C "$WORK" pull --ff-only origin main 2>&1); then
+    echo "post-receive: Arbeitskopie auf $(git -C "$WORK" rev-parse --short HEAD)"
+  else
+    echo "post-receive: FEHLGESCHLAGEN, Arbeitskopie haengt zurueck"
+    echo "$AUSGABE" | sed 's/^/post-receive: /'
+    echo "post-receive: pruefen mit  git -C $WORK status"
+  fi
+done
