@@ -1,0 +1,16 @@
+# Schluessel nie einchecken — die Vorlage traegt nur das Beispiel
+.env
+.env.*
+!.env.example
+
+# Abhaengigkeiten und Bauartefakte
+node_modules/
+__pycache__/
+.venv/
+dist/
+build/
+.next/
+.vercel/
+
+# Betriebssystem
+.DS_Store
