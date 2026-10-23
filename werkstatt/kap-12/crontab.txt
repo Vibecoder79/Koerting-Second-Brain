@@ -1,0 +1,1 @@
+0 6 * * * /opt/plattform/lebenszeichen.sh briefing -- /opt/plattform/briefing.py --senden >> /opt/vault/logs/briefing.log 2>&1

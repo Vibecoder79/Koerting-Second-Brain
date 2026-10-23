@@ -1,0 +1,5 @@
+name	max_stunden	takt	beschreibung	konto	modell	effort
+zaehlen	26	taeglich 04:05	Zaehlt die Notizen je Baum und schreibt die Tabelle ins Vault	jobs	-	-
+abholen	2	stuendlich	Holt Protokolle beim Transkriptionsdienst ab (geplant, noch nicht gebaut)	jobs	-	-
+bericht	26	taeglich 06:00	Vergleicht Register und Lebenszeichen, gibt die Tageszeile aus	arbeit	-	-
+steckbrief	26	taeglich 03:30	Fasst ein abgelegtes Fremddokument hinter dem Zaun zu einem Steckbrief zusammen	jobs	sonnet	medium

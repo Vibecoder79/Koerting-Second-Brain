@@ -1,0 +1,30 @@
+# Schema der Agentenakte. Eine Datei, zwei Leser: die Wache beim Schreiben und das Register.
+# art: feld | abschnitt.  pflicht: alle | aussenkontakt (erkannt an rufname:) | eigner (setzt nur der Eigner; fehlt es, kein Befund)
+# werte: abschliessende Liste mit |, ohne Prosa. Ein Feld ohne werte wird im Wert nicht geprueft.
+# Gekuerzt gegenueber dem Referenzsystem: dort kommen zone, tools, vertretung, wissen und die Zonen-Werte dazu.
+art	name	pflicht	bemerkung	werte
+feld	name	alle	kurz, mit Bindestrichen
+feld	rolle	alle	ein Satz, was der Agent ist
+feld	owner	alle	der Mensch, der verantwortet
+feld	zweck	alle	wofuer er aktiviert wird, und wofuer nicht
+feld	autoritaet	alle	setzt der Eigner, nie geraten; autonom gibt es nicht	delegiert|begrenzt
+feld	schreibt	alle	setzt der Eigner, nie geraten	nichts|vault|eigene Datenbank|ueber den Ausfuehrer
+feld	model	alle	Pflicht, kein Vorgabewert
+feld	effort	alle	Pflicht, kein Vorgabewert	low|medium|high
+feld	version	alle	Ganzzahl; jede Aenderung an Identitaet oder Grenzen zaehlt hoch
+feld	laufzeit	alle	Ergebnis des Laufzeit-Katalogs, mit Begruendungssatz
+feld	rufname	aussenkontakt	ein Name in allen Kanaelen
+feld	eskalation	aussenkontakt	wer entscheidet, wenn das Ergebnis nicht eintritt
+feld	kosten_deckel	aussenkontakt	Soll je Lauf, nominal in USD
+feld	abgenommen	eigner	YYYY-MM-DD vN; N gleich version; nur wenn kein genannter Traeger geplant ist
+feld	status	eigner	fehlt heisst aktiv	aktiv|auslaufend|zurueckgezogen|stillgelegt
+feld	status_grund	eigner	Pflicht, sobald status nicht aktiv ist
+feld	status_seit	eigner	YYYY-MM-DD, Pflicht, sobald status nicht aktiv ist
+abschnitt	Identität	alle	wer er ist, fuer wen er spricht, was er weiss und was nicht
+abschnitt	Aufgaben — die Stelle	alle	was er tut, mit welchem Werkzeug, was ein Auftrag ist
+abschnitt	Grenzen	alle	jede Zeile endet mit Träger: <name> oder Träger: Prosa, weil <Grund>; eine Zeile beginnt mit Abbruch:
+abschnitt	Charakter	aussenkontakt	wie er mit dem Eigner spricht
+abschnitt	Stil	alle	Ton je Register; bei Aussenkontakt beide Sprachen, Marker de und en
+abschnitt	Prüffragen	alle	die nummerierten Fragen vor jeder Antwort
+abschnitt	Woran ein guter Lauf zu erkennen ist	alle	pruefbar von jemandem, der nicht dabei war
+abschnitt	Wie dieser Agent besser wird	alle	sieben Angaben, je als **Name:** auf eigener Zeile: Lauf, Externes Signal, Bewertbar, Was sich ändern darf, Wer freigibt, Rückführung, Nachweis

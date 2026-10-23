@@ -1,0 +1,6 @@
+import modellwahl
+import zaun          # Kapitel 8: der eine Zaun um Fremdmaterial
+…
+    material = pathlib.Path(a.eingabe).read_text(encoding="utf-8")
+    prompt = zaun.prompt("Fasse das folgende Dokument in hoechstens drei Saetzen zusammen.",
+                         material, "Antworte nur mit der Zusammenfassung.", name="DOKUMENT")

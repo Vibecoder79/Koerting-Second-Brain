@@ -1,0 +1,1 @@
+15 3 * * * /opt/plattform/lebenszeichen.sh hygiene -- /opt/plattform/mit-sperre.sh -- /opt/plattform/hygiene.py >> /opt/vault/logs/hygiene.log 2>&1

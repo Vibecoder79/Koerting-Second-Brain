@@ -1,0 +1,19 @@
+# Denylist: Alles im Vault wird versioniert. Was hier steht, ist die Ausnahme
+# und muss sich rechtfertigen. Diese Datei wirkt nur auf ungetrackte Dateien
+# und kennt keine Inhalte; Dateinamen mit Geheimnis-Muster und Schluessel im Text
+# haelt das Prueftor vor dem Commit auf (Kapitel 5).
+
+# Metadaten des Betriebssystems, kein Wissen
+.DS_Store
+.Trash/
+
+# Zustand DIESES Rechners: offene Tabs, Fensterlage. Zwei Geraete, Dauerkonflikt.
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# Werkzeug-Einstellungen je Maschine; koennen Zugangsdaten tragen
+.claude/settings.local.json
+
+# Bytecode, jederzeit neu erzeugbar
+__pycache__/
+*.pyc

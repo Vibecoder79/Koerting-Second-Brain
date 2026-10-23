@@ -1,0 +1,1 @@
+5 4 * * * HEARTBEAT_DIR=/opt/vault/heartbeats /opt/plattform/lebenszeichen.sh zaehlen -- /opt/plattform/mit-sperre.sh -- /opt/plattform/job-zaehlen.sh >> /opt/vault/logs/zaehlen.log 2>&1

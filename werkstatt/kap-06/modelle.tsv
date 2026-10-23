@@ -1,0 +1,6 @@
+# Stufe -> voller Modellname, einmal hier. Beim Generationswechsel aendert sich eine Zeile.
+# gegenstueck: das Modell des zweiten Werkzeugs fuer den Ausweichweg (Kapitel 6, von Hand umgeschaltet)
+stufe	version	gegenstueck
+haiku	claude-haiku-5-5	gpt-5.4-mini
+sonnet	claude-sonnet-5-5	gpt-5.6-luna
+opus	claude-opus-5-5	gpt-5.6-sol
