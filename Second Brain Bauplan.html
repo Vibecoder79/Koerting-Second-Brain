@@ -2178,7 +2178,18 @@ git -C /opt/vault/work/vault push origin main</code></pre></div>
 
 
 <div class="pruefung">
-<p><strong>So prüfst du es.</strong> Die Arbeitskopie hängt an einer Nabe im Nachbarverzeichnis, das Prüftor ist aktiv. Der Job über beide Hüllen: Die Nachernte meldet eine committete Datei und den Push, das Lebenszeichen trägt <code>status=erfolg</code>, Arbeitskopie und Nabe zeigen denselben Commit <code>chore(job-zaehlen.sh): 1 Datei(en) nach der Laufmarke geaendert, 0 fremde(r) Pfad(e) unberuehrt</code>. Dann <code>lebenszeichen.sh bericht -- false</code>: Rückgabewert 1 und <code>status=fehlschlag</code>. Der Bericht zeigt drei Zeilen, <code>OK</code> für den gelaufenen Job, <code>NIE</code> für den geplanten, <code>ROT</code> mit Rückgabewert für den gescheiterten, und endet mit 77. Die Sperre: Ein fremder Prozess hält sie vier Sekunden, die Hülle mit einer Wartezeit von einer Sekunde bricht mit 75 ab. Die Nachernte: Eine Datei aus einer Sitzung vor dem Lauf ändern, dann einen Lauf, der eine neue Datei schreibt; die neue Datei wird committet, die Sitzungsdatei steht weiter als geändert da, und die Commit-Nachricht zählt einen fremden Pfad. Der verweigerte Commit: Ein Lauf, der <code>zugang.env</code> ins Vault schreibt, endet mit 74 und <code>status=fehlschlag</code>, obwohl der Befehl selbst 0 zurückgab, und die Datei steht danach als untracked da, nicht im Index. Der gescheiterte Push: Die Nabe kurz schreibgeschützt, ein Lauf committet und endet mit 74. Das gescheiterte Nachziehen: Ein lokaler Commit in der Arbeitskopie und ein fremder in der Nabe, die Hülle bricht vor dem Job mit 76 ab. Das Prüftor allein: eine Notiz mit einer AWS-Schlüsselkennung im Text vormerken und committen ergibt 1 und nennt den Scanner; ein fremdes Ziel eintragen ergibt 1 und nennt die Adresse; die SSH-Form <code>betrieb@wissen:</code> als Ziel ergibt 0; mit <code>GITLEAKS</code> auf einen Pfad, den es nicht gibt, ergibt jeder Commit 1. Alle Ergebnisse sind so gelaufen.</p>
+<p><strong>So prüfst du es.</strong> Die Arbeitskopie hängt an einer Nabe im Nachbarverzeichnis, das Prüftor ist aktiv.</p>
+<ul>
+<li>Der Job über beide Hüllen: Die Nachernte meldet eine committete Datei und den Push, das Lebenszeichen trägt <code>status=erfolg</code>, Arbeitskopie und Nabe zeigen denselben Commit <code>chore(job-zaehlen.sh): 1 Datei(en) nach der Laufmarke geaendert, 0 fremde(r) Pfad(e) unberuehrt</code>.</li>
+<li>Dann <code>lebenszeichen.sh bericht -- false</code>: Rückgabewert 1 und <code>status=fehlschlag</code>. Der Bericht zeigt drei Zeilen, <code>OK</code> für den gelaufenen Job, <code>NIE</code> für den geplanten, <code>ROT</code> mit Rückgabewert für den gescheiterten, und endet mit 77.</li>
+<li>Die Sperre: Ein fremder Prozess hält sie vier Sekunden, die Hülle mit einer Wartezeit von einer Sekunde bricht mit 75 ab.</li>
+<li>Die Nachernte: Eine Datei aus einer Sitzung vor dem Lauf ändern, dann einen Lauf, der eine neue Datei schreibt; die neue Datei wird committet, die Sitzungsdatei steht weiter als geändert da, und die Commit-Nachricht zählt einen fremden Pfad.</li>
+<li>Der verweigerte Commit: Ein Lauf, der <code>zugang.env</code> ins Vault schreibt, endet mit 74 und <code>status=fehlschlag</code>, obwohl der Befehl selbst 0 zurückgab, und die Datei steht danach als untracked da, nicht im Index.</li>
+<li>Der gescheiterte Push: Die Nabe kurz schreibgeschützt, ein Lauf committet und endet mit 74.</li>
+<li>Das gescheiterte Nachziehen: Ein lokaler Commit in der Arbeitskopie und ein fremder in der Nabe, die Hülle bricht vor dem Job mit 76 ab.</li>
+<li>Das Prüftor allein: eine Notiz mit einer AWS-Schlüsselkennung im Text vormerken und committen ergibt 1 und nennt den Scanner; ein fremdes Ziel eintragen ergibt 1 und nennt die Adresse; die SSH-Form <code>betrieb@wissen:</code> als Ziel ergibt 0; mit <code>GITLEAKS</code> auf einen Pfad, den es nicht gibt, ergibt jeder Commit 1.</li>
+</ul>
+<p>Alle Ergebnisse sind so gelaufen.</p>
 </div>
 
 <h3>Typische Fehler</h3>
@@ -2674,7 +2685,17 @@ if __name__ == &quot;__main__&quot;:
 
 
 <div class="pruefung">
-<p><strong>So prüfst du es.</strong> <code>modellwahl.py --job steckbrief</code> gibt die Flag-Kette mit dem vollen Modellnamen und der Denktiefe aus, ohne Ersatzmodell, weil die Stufe die mittlere ist; <code>--job unbekannt</code> ergibt den Notnagel mit einer Meldung auf der Fehlerausgabe. Der echte Lauf über ein vierzeiliges Beispieldokument endet mit 0, einem Zug und einer Zusammenfassung; der Kopf der Ausgabe nennt die benutzten Modelle und die Kosten. Zwei aufgezeichnete Antworten als Attrappe (<code>MODELL_LAUF_ATTRAPPE</code>): eine mit <code>num_turns</code> 0 ergibt 77 und die Meldung, dass kein Modell lief; eine, die kein JSON ist, ergibt 69. Ein Prozess, der mit Fehler endet (ein falsches <code>claude</code> im Pfad, das «nicht angemeldet» meldet), ergibt 69 mit dem Grund aus der Fehlerausgabe. Die Drift-Prüfung über den Ausgabeordner ist grün; eine Ausgabe mit einem anderen Modell im Kopf färbt sie rot mit 77, ein leerer Ordner ergibt «nicht messbar» mit 78, und eine Ausgabe eines Jobs ohne Registereintrag ist ein Befund. <code>helfer_pruefen.py</code> meldet die Helfer-Datei als vollständig; dieselbe Datei ohne <code>model</code> ergibt einen Befund mit Rückgabewert 1. Der Staffelstab wird geschrieben, committet und zur Nabe gepusht; sobald die Tagesnotiz jünger ist, meldet das Lesen ihn als überholt, und ist die Nabe nicht erreichbar, endet das Schreiben mit 74. Alle Ergebnisse sind so gelaufen.</p>
+<p><strong>So prüfst du es.</strong></p>
+<ul>
+<li><code>modellwahl.py --job steckbrief</code> gibt die Flag-Kette mit dem vollen Modellnamen und der Denktiefe aus, ohne Ersatzmodell, weil die Stufe die mittlere ist; <code>--job unbekannt</code> ergibt den Notnagel mit einer Meldung auf der Fehlerausgabe.</li>
+<li>Der echte Lauf über ein vierzeiliges Beispieldokument endet mit 0, einem Zug und einer Zusammenfassung; der Kopf der Ausgabe nennt die benutzten Modelle und die Kosten.</li>
+<li>Zwei aufgezeichnete Antworten als Attrappe (<code>MODELL_LAUF_ATTRAPPE</code>): eine mit <code>num_turns</code> 0 ergibt 77 und die Meldung, dass kein Modell lief; eine, die kein JSON ist, ergibt 69.</li>
+<li>Ein Prozess, der mit Fehler endet (ein falsches <code>claude</code> im Pfad, das «nicht angemeldet» meldet), ergibt 69 mit dem Grund aus der Fehlerausgabe.</li>
+<li>Die Drift-Prüfung über den Ausgabeordner ist grün; eine Ausgabe mit einem anderen Modell im Kopf färbt sie rot mit 77, ein leerer Ordner ergibt «nicht messbar» mit 78, und eine Ausgabe eines Jobs ohne Registereintrag ist ein Befund.</li>
+<li><code>helfer_pruefen.py</code> meldet die Helfer-Datei als vollständig; dieselbe Datei ohne <code>model</code> ergibt einen Befund mit Rückgabewert 1.</li>
+<li>Der Staffelstab wird geschrieben, committet und zur Nabe gepusht; sobald die Tagesnotiz jünger ist, meldet das Lesen ihn als überholt, und ist die Nabe nicht erreichbar, endet das Schreiben mit 74.</li>
+</ul>
+<p>Alle Ergebnisse sind so gelaufen.</p>
 </div>
 
 <h3>Typische Fehler</h3>
@@ -3063,7 +3084,13 @@ sys.exit(1 if befund else 0)</code></pre></div>
 
 
 <div class="pruefung">
-<p><strong>So prüfst du es.</strong> Die Probe meldet 24 von 24 Fällen grün: zwölf verweigerte Befehle, darunter ein mehrteiliger mit pauschalem Hinzufügen in der Mitte, ein <code>--amend</code> ohne Pfad, ein Commit ohne Pfad mit einem Pfad erst im zweiten Teil des Aufrufs, ein Commit mit <code>--allow-empty</code>, ein Löschen mit Vault-Pfad und zwei Aufrufe mit <code>-C &lt;pfad&gt;</code>; neun durchgelassene, darunter ein Commit mit mehrzeiliger Nachricht und Pfad am Ende, ein <code>--amend</code> mit Pfad, ein Commit mit <code>-C</code> und Pfad, ein Push mit einem Löschen in einem Wegwerfordner im zweiten Teil und ein Löschen in einem Wegwerfordner; und drei Fehlerfälle: ohne Musterdatei und mit kaputtem Eingang meldet der Riegel sich als inaktiv, bei einem kaputten Muster neben einem Treffer kommt ein einziges JSON mit beidem. Fehlt der Kern <code>git-riegel.py</code>, meldet die Hülle den Riegel ebenfalls als inaktiv. Das Register zählt vier Abschnitte: zwei mit Träger, zwei als Prosa mit Grund, keiner ohne Kennzeile; ein angehängter Abschnitt ohne Kennzeile wird als Befund gemeldet, Rückgabewert 1. Alle Ergebnisse sind so gelaufen.</p>
+<p><strong>So prüfst du es.</strong></p>
+<ul>
+<li>Die Probe meldet 24 von 24 Fällen grün: zwölf verweigerte Befehle, darunter ein mehrteiliger mit pauschalem Hinzufügen in der Mitte, ein <code>--amend</code> ohne Pfad, ein Commit ohne Pfad mit einem Pfad erst im zweiten Teil des Aufrufs, ein Commit mit <code>--allow-empty</code>, ein Löschen mit Vault-Pfad und zwei Aufrufe mit <code>-C &lt;pfad&gt;</code>; neun durchgelassene, darunter ein Commit mit mehrzeiliger Nachricht und Pfad am Ende, ein <code>--amend</code> mit Pfad, ein Commit mit <code>-C</code> und Pfad, ein Push mit einem Löschen in einem Wegwerfordner im zweiten Teil und ein Löschen in einem Wegwerfordner; und drei Fehlerfälle: ohne Musterdatei und mit kaputtem Eingang meldet der Riegel sich als inaktiv, bei einem kaputten Muster neben einem Treffer kommt ein einziges JSON mit beidem.</li>
+<li>Fehlt der Kern <code>git-riegel.py</code>, meldet die Hülle den Riegel ebenfalls als inaktiv.</li>
+<li>Das Register zählt vier Abschnitte: zwei mit Träger, zwei als Prosa mit Grund, keiner ohne Kennzeile; ein angehängter Abschnitt ohne Kennzeile wird als Befund gemeldet, Rückgabewert 1.</li>
+</ul>
+<p>Alle Ergebnisse sind so gelaufen.</p>
 </div>
 
 <h3>Typische Fehler</h3>
@@ -3233,7 +3260,7 @@ sys.exit(1 if befund else 0)</code></pre></div>
 <tbody>
 <tr><td>Ein Feld zur Vertraulichkeit stand in jeder neuen Datei. Drei Programme setzten es auf denselben festen Wert, und keines las es. Eine Regel zur Weitergabe hing an diesem Feld.</td><td>Ein Feld ohne Leser ist keine Regel. Ein Anker für «was darf das Haus verlassen» gehört dorthin, wo Programme tatsächlich lesen, etwa an den Ablageort.</td></tr>
 <tr><td>Ein Prüftor, das sensible Dateien an Namensmustern erkennen sollte, liess an einem Tag 23 fremde Dokumente durch, weil es ihre Namen nicht kannte; selbst eine vollständige Musterliste hätte nur 15 davon erkannt.</td><td>Eine Verbotsliste hinkt der Wirklichkeit hinterher. Geprüft wird das Ziel, nicht der Name.</td></tr>
-<tr><td>Die Sperrliste für Werkzeuge stand nur in einem Kommentar, und die erste Probe hielt das für erfüllt.</td><td>Durchgesetzt ist nur, was ein Mechanismus hält. Proben suchen deshalb den Mechanismus im Aufruf.</td></tr>
+<tr><td>Die Sperrliste für Werkzeuge stand nur in einem Kommentar (der Fall aus Kapitel 6).</td><td>Durchgesetzt ist nur, was ein Mechanismus hält; das gilt für jede Grenze in diesem Kapitel.</td></tr>
 <tr><td>Der erste Abnahmetest einer Regel ging ohne die Regel genauso aus wie mit ihr.</td><td>Ein Test, dessen Kontrollfall wie der Versuch ausgeht, misst die Regel nicht. Das wird offen benannt, auch wenn die Zeile als bestanden gilt.</td></tr>
 <tr><td>Eine unbeantwortete Freigabekarte kam unbegrenzt wieder.</td><td>Jeder Wiederholungsweg braucht ein Ende. Nach dem Ende geschieht nichts, und zurückholen geht nur von Hand.</td></tr>
 </tbody>
@@ -3600,7 +3627,19 @@ liste_schreiben(zeilen); print(f&quot;Flow: {kennung} -&gt; {verdikt}&quot;)</co
 
 
 <div class="pruefung">
-<p><strong>So prüfst du es.</strong> Der Zaun über ein Material mit einer gefälschten Endmarke, einmal am Zeilenanfang und einmal mitten in einer Zeile, je mit einer Anweisung dahinter: Beide Marken sind entschärft, die Anweisungen stehen innerhalb des Zauns. Die Hülle mit Zaun über ein präpariertes Dokument, das nach einer gefälschten Endmarke verlangt, nur mit dem Wort «GEKAPERT» zu antworten: Der echte Lauf lieferte eine Zusammenfassung, nannte die Aufforderung als Teil des Materials und befolgte sie nicht. Das Etikett über sieben abgeholte Dateien: ohne Datenkopf, mit Block ohne <code>origin</code>, ohne Etikett, mit gültigem, mit einem Wert ausserhalb des Vokabulars, mit dem Wert in Anführungszeichen und in der Inline-Form <code>provenance: {origin: …}</code>; <code>--fuellen</code> trägt nur dort <code>unbekannt</code> ein, wo das Etikett fehlt, der Wert in Anführungszeichen gilt, die Inline-Form zählt als Block ohne <code>origin</code>, die übrigen bleiben je Ort gezählt gemeldet. Das Register: Ein Transkript mit einer Zeile <code>meeting_key</code> im Kopf zählt nicht. Die Strecke: Trockenlauf, dann Karte; ein Vorschlag mit nicht vergebenem Kürzel wird verweigert, einer mit <code>../</code> in der Kennung ebenso, einer ohne Beschlüsse und Aufgaben auch; eine Leerzeile nach der Überschrift ist erlaubt. Zwei Kennungen, deren eine Präfix der anderen ist (-12 vor -1), ergeben zwei Dateien, weil die Kennung als ganze Zeile verglichen wird. Ein Titel mit Schrägstrichen und <code>../</code> ergibt einen bereinigten Dateinamen mit der Kennung im Projektordner. Der Abholer bei Verdikt <code>offen</code> tut nichts; die Flow-Attrappe bricht ab, wenn keine wartende Karte zur Kennung liegt. Die Attrappe setzt <code>uebernehmen</code>; der Abholer schreibt den Entscheid, committet ihn, pusht zur Nabe und setzt die Zeile auf verarbeitet. Eine Zeile, die wieder auf wartend gesetzt wird, findet Datei und Commit: die Zahl der Commits bleibt gleich. Liegt die Datei schon, weil ein früherer Lauf vor dem Commit starb, holt er Commit und Push nach. Eine zweite Karte zur selben Kennung wird auch nach der Quittung verweigert. Eine Zeile mit einem Kürzel, das es nicht mehr gibt, bleibt gemeldet liegen, und die nächste Zeile wird trotzdem eingelöst; ebenso bei einem Commit, der an einem schreibgeschützten Repository scheitert: die Zeile bleibt wartend, die verworfene Zeile danach wird quittiert, und nach der Freigabe des Repositorys wird sie im nächsten Lauf eingelöst. Ein Verdikt «ueberarbeiten» bleibt gemeldet liegen. Eine Karte mit 22 Tagen ohne Antwort verfällt, und es geschieht nichts. Am Ende liegen drei Entscheide, lokal und in der Nabe. Alle Ergebnisse sind so gelaufen.</p>
+<p><strong>So prüfst du es.</strong></p>
+<ul>
+<li>Der Zaun über ein Material mit einer gefälschten Endmarke, einmal am Zeilenanfang und einmal mitten in einer Zeile, je mit einer Anweisung dahinter: Beide Marken sind entschärft, die Anweisungen stehen innerhalb des Zauns.</li>
+<li>Die Hülle mit Zaun über ein präpariertes Dokument, das nach einer gefälschten Endmarke verlangt, nur mit dem Wort «GEKAPERT» zu antworten: Der echte Lauf lieferte eine Zusammenfassung, nannte die Aufforderung als Teil des Materials und befolgte sie nicht.</li>
+<li>Das Etikett über sieben abgeholte Dateien: ohne Datenkopf, mit Block ohne <code>origin</code>, ohne Etikett, mit gültigem, mit einem Wert ausserhalb des Vokabulars, mit dem Wert in Anführungszeichen und in der Inline-Form <code>provenance: {origin: …}</code>; <code>--fuellen</code> trägt nur dort <code>unbekannt</code> ein, wo das Etikett fehlt, der Wert in Anführungszeichen gilt, die Inline-Form zählt als Block ohne <code>origin</code>, die übrigen bleiben je Ort gezählt gemeldet.</li>
+<li>Das Register: Ein Transkript mit einer Zeile <code>meeting_key</code> im Kopf zählt nicht.</li>
+<li>Die Strecke: Trockenlauf, dann Karte; ein Vorschlag mit nicht vergebenem Kürzel wird verweigert, einer mit <code>../</code> in der Kennung ebenso, einer ohne Beschlüsse und Aufgaben auch; eine Leerzeile nach der Überschrift ist erlaubt. Zwei Kennungen, deren eine Präfix der anderen ist (-12 vor -1), ergeben zwei Dateien, weil die Kennung als ganze Zeile verglichen wird. Ein Titel mit Schrägstrichen und <code>../</code> ergibt einen bereinigten Dateinamen mit der Kennung im Projektordner.</li>
+<li>Der Abholer bei Verdikt <code>offen</code> tut nichts; die Flow-Attrappe bricht ab, wenn keine wartende Karte zur Kennung liegt. Die Attrappe setzt <code>uebernehmen</code>; der Abholer schreibt den Entscheid, committet ihn, pusht zur Nabe und setzt die Zeile auf verarbeitet. Eine Zeile, die wieder auf wartend gesetzt wird, findet Datei und Commit: die Zahl der Commits bleibt gleich. Liegt die Datei schon, weil ein früherer Lauf vor dem Commit starb, holt er Commit und Push nach. Eine zweite Karte zur selben Kennung wird auch nach der Quittung verweigert.</li>
+<li>Eine Zeile mit einem Kürzel, das es nicht mehr gibt, bleibt gemeldet liegen, und die nächste Zeile wird trotzdem eingelöst; ebenso bei einem Commit, der an einem schreibgeschützten Repository scheitert: die Zeile bleibt wartend, die verworfene Zeile danach wird quittiert, und nach der Freigabe des Repositorys wird sie im nächsten Lauf eingelöst.</li>
+<li>Ein Verdikt «ueberarbeiten» bleibt gemeldet liegen. Eine Karte mit 22 Tagen ohne Antwort verfällt, und es geschieht nichts.</li>
+<li>Am Ende liegen drei Entscheide, lokal und in der Nabe.</li>
+</ul>
+<p>Alle Ergebnisse sind so gelaufen.</p>
 </div>
 
 <h3>Typische Fehler</h3>
@@ -4179,7 +4218,15 @@ kill &quot;$ATTRAPPE_PID&quot;</code></pre></div>
 
 
 <div class="pruefung">
-<p><strong>So prüfst du es.</strong> Der Trockenlauf nennt Empfänger, Betreff und Postfach und schreibt nichts. Der scharfe Lauf legt den Entwurf an und liest ihn zurück: <code>isDraft</code> wahr, Betreff gleich, Empfänger gleich. Ein Empfänger ohne Treffer in den Kontakt-Notizen endet mit 77 und ohne Entwurf; eine Attrappe, die auf den POST mit 403 antwortet, ergibt 77 mit der Klasse «dauerhaft»; eine, die den Entwurf anlegt und die Rückprüfung mit 503 beantwortet, ergibt 77 mit dem Hinweis, dass der Entwurf schon liegen kann; ein Anmeldedienst, der mit 429 antwortet, ergibt 69, einer mit 401 ergibt 77, einer, der nicht erreichbar ist, 69. Die Riegel-Probe mit elf Aufrufen: DELETE auf eine Gruppe gebremst; PATCH mit <code>displayName</code> durch; PATCH mit <code>visibility</code> und mit <code>mailNickname</code> gebremst; POST auf <code>/cancel</code>, <code>/permanentDelete</code>, <code>/send</code>, <code>/sendMail</code>, auf <code>/accept</code> mit Abfrageteil und auf <code>/tentativelyAccept</code> mit Schrägstrich am Ende gebremst; POST auf Nachrichten durch. Das Protokoll der Attrappe zeigt von diesen elf genau zwei: den PATCH mit <code>displayName</code> und den POST auf Nachrichten. Der Wächter mit einem Token, das genau das Soll trägt, ergibt 0; mit einem zusätzlichen Recht 77 und nennt es; mit einem fehlenden Recht 77 und sagt, dass der Job still scheitern würde; ohne erreichbaren Anmeldedienst, ohne lesbare Zugangsdatei oder ohne <code>soll.txt</code> 78. Alle Ergebnisse sind so gelaufen.</p>
+<p><strong>So prüfst du es.</strong></p>
+<ul>
+<li>Der Trockenlauf nennt Empfänger, Betreff und Postfach und schreibt nichts.</li>
+<li>Der scharfe Lauf legt den Entwurf an und liest ihn zurück: <code>isDraft</code> wahr, Betreff gleich, Empfänger gleich.</li>
+<li>Ein Empfänger ohne Treffer in den Kontakt-Notizen endet mit 77 und ohne Entwurf; eine Attrappe, die auf den POST mit 403 antwortet, ergibt 77 mit der Klasse «dauerhaft»; eine, die den Entwurf anlegt und die Rückprüfung mit 503 beantwortet, ergibt 77 mit dem Hinweis, dass der Entwurf schon liegen kann; ein Anmeldedienst, der mit 429 antwortet, ergibt 69, einer mit 401 ergibt 77, einer, der nicht erreichbar ist, 69.</li>
+<li>Die Riegel-Probe mit elf Aufrufen: DELETE auf eine Gruppe gebremst; PATCH mit <code>displayName</code> durch; PATCH mit <code>visibility</code> und mit <code>mailNickname</code> gebremst; POST auf <code>/cancel</code>, <code>/permanentDelete</code>, <code>/send</code>, <code>/sendMail</code>, auf <code>/accept</code> mit Abfrageteil und auf <code>/tentativelyAccept</code> mit Schrägstrich am Ende gebremst; POST auf Nachrichten durch. Das Protokoll der Attrappe zeigt von diesen elf genau zwei: den PATCH mit <code>displayName</code> und den POST auf Nachrichten.</li>
+<li>Der Wächter mit einem Token, das genau das Soll trägt, ergibt 0; mit einem zusätzlichen Recht 77 und nennt es; mit einem fehlenden Recht 77 und sagt, dass der Job still scheitern würde; ohne erreichbaren Anmeldedienst, ohne lesbare Zugangsdatei oder ohne <code>soll.txt</code> 78.</li>
+</ul>
+<p>Alle Ergebnisse sind so gelaufen.</p>
 </div>
 
 <h3>Typische Fehler</h3>
@@ -4676,7 +4723,16 @@ for quelle in quellen:
 
 
 <div class="pruefung">
-<p><strong>So prüfst du es.</strong> Der Zuordner: ein Titel mit vergebenem Kürzel ergibt den Projektordner; ohne Kürzel, mit unbekanntem Kürzel und mit Kürzel ohne Thema ergibt er den Warteraum mit Grund. Ein Transkript im Warteraum mit einer Zeile <code>meeting_key</code> im Kopf zählt im Register nicht. Der Abholer über fünf aufgezeichnete Sitzungen: eine mit Kürzel landet in <code>Meetings/</code> des Projekts mit Etikett, Protokoll als Zitat und Transkript daneben; eine ohne Kürzel im Warteraum; eine gerade beendete ohne Protokoll wird mit Karenz übersprungen und steht nicht im Merker; eine mit einer Endzeit ohne Zone bleibt gemeldet liegen und steht ebenfalls nicht im Merker; eine zweite mit gleichem Titel am gleichen Tag bekommt die Sitzungskennung in den Dateinamen. Der zweite Lauf holt nichts Neues und meldet dieselben zwei. Der Mail-Eingang ohne Absenderliste bricht ab, bevor er eine Mail anfasst. Über sieben Mails: intern mit Kennzeichnung ergibt eine Notiz, extern mit <code>dmarc=pass</code> und passender Domain ebenso; <code>dmarc=fail</code> und ein Absender ausserhalb der Liste werden abgewiesen; eine Mail ohne Kürzel wartet; eine ohne Datum und eine ohne <code>Message-ID</code> werden mit Grund abgewiesen. Die Notiz rahmt den Rumpf als Zitat, auch die Zeile, die wie eine Anweisung klingt. Ein erneuter Lauf findet nur die wartende Mail. Zwei Hubs mit demselben Kürzel ergeben eine Kollisionsmeldung, und das Kürzel wird nicht zugeordnet. Der Warteraum zählt eins; ein Verschieben mit unbekanntem Kürzel bricht ab, eine Datei, die nicht im Warteraum liegt, ebenso; mit bekanntem Kürzel zeigt der Trockenlauf Notiz und Transkript, der scharfe Lauf verschiebt beide, danach zählt der Warteraum null, und ein zweites Verschieben derselben Datei bricht ab, weil sie im Ziel schon liegt. Alle Ergebnisse sind so gelaufen.</p>
+<p><strong>So prüfst du es.</strong></p>
+<ul>
+<li>Der Zuordner: ein Titel mit vergebenem Kürzel ergibt den Projektordner; ohne Kürzel, mit unbekanntem Kürzel und mit Kürzel ohne Thema ergibt er den Warteraum mit Grund.</li>
+<li>Ein Transkript im Warteraum mit einer Zeile <code>meeting_key</code> im Kopf zählt im Register nicht.</li>
+<li>Der Abholer über fünf aufgezeichnete Sitzungen: eine mit Kürzel landet in <code>Meetings/</code> des Projekts mit Etikett, Protokoll als Zitat und Transkript daneben; eine ohne Kürzel im Warteraum; eine gerade beendete ohne Protokoll wird mit Karenz übersprungen und steht nicht im Merker; eine mit einer Endzeit ohne Zone bleibt gemeldet liegen und steht ebenfalls nicht im Merker; eine zweite mit gleichem Titel am gleichen Tag bekommt die Sitzungskennung in den Dateinamen. Der zweite Lauf holt nichts Neues und meldet dieselben zwei.</li>
+<li>Der Mail-Eingang ohne Absenderliste bricht ab, bevor er eine Mail anfasst. Über sieben Mails: intern mit Kennzeichnung ergibt eine Notiz, extern mit <code>dmarc=pass</code> und passender Domain ebenso; <code>dmarc=fail</code> und ein Absender ausserhalb der Liste werden abgewiesen; eine Mail ohne Kürzel wartet; eine ohne Datum und eine ohne <code>Message-ID</code> werden mit Grund abgewiesen. Die Notiz rahmt den Rumpf als Zitat, auch die Zeile, die wie eine Anweisung klingt. Ein erneuter Lauf findet nur die wartende Mail.</li>
+<li>Zwei Hubs mit demselben Kürzel ergeben eine Kollisionsmeldung, und das Kürzel wird nicht zugeordnet.</li>
+<li>Der Warteraum zählt eins; ein Verschieben mit unbekanntem Kürzel bricht ab, eine Datei, die nicht im Warteraum liegt, ebenso; mit bekanntem Kürzel zeigt der Trockenlauf Notiz und Transkript, der scharfe Lauf verschiebt beide, danach zählt der Warteraum null, und ein zweites Verschieben derselben Datei bricht ab, weil sie im Ziel schon liegt.</li>
+</ul>
+<p>Alle Ergebnisse sind so gelaufen.</p>
 </div>
 
 <h3>Typische Fehler</h3>
@@ -4841,7 +4897,9 @@ for quelle in quellen:
 <p><strong>Du brauchst:</strong> das Vault aus Kapitel 8, Python 3 mit dem Modul <code>cryptography</code>, <code>openssl</code> und Git. GitHub und der Bilddienst sind hier Attrappen auf der eigenen Maschine: Die erste prüft das JWT, ein signiertes Kurzzeit-Token der App, gegen den öffentlichen Schlüssel, wie es der echte Dienst tut, die zweite kennt den Idempotenz-Schlüssel. Die echten Dienste sind damit nicht gemessen; was dort anders ist, zeigt erst der erste Lauf mit Trockenlauf.</p>
 
 <h3>Schritt 1: Der Zugang über eine App</h3>
-<p>Eine GitHub-App hat eine Kennung und einen privaten Schlüssel. Aus beiden entsteht je Aufruf ein JWT, eine signierte Behauptung «ich bin die App mit dieser Kennung», hier neun Minuten gültig und eine Minute rückdatiert, weil GitHub bei vorlaufender Uhr ablehnt. Gegen das JWT gibt GitHub je Installation einen Zugang für eine Stunde. Der bleibt im Speicher des Aufrufers. Git bekommt ihn über das Protokoll für Credential-Helfer: Git ruft den Helfer mit <code>get</code> als Argument, schreibt Protokoll und Host auf die Standardeingabe, und der Helfer antwortet mit Benutzer und Zugang. Git merkt sich nichts, solange kein zweiter Helfer konfiguriert ist, der speichert; deshalb ist dieser der einzige. Das Werkzeug kennt genau zwei Pfade der Schnittstelle, geprüft als ganze Zeichenkette, und eine Installation ist eine Zahl; mit dem Stundenzugang arbeitet dann Git oder ein anderes Werkzeug. Hat die App mehrere Installationen, je Konto eine, nennt <code>GITHUB_APP_INSTALLATION</code> dem Helfer die richtige; ohne Angabe nimmt er die erste.</p>
+<p>Eine GitHub-App hat eine Kennung und einen privaten Schlüssel. Aus beiden entsteht je Aufruf ein JWT, eine signierte Behauptung «ich bin die App mit dieser Kennung», hier neun Minuten gültig und eine Minute rückdatiert, weil GitHub bei vorlaufender Uhr ablehnt. Gegen das JWT gibt GitHub je Installation einen Zugang für eine Stunde. Der bleibt im Speicher des Aufrufers.</p>
+<p>Git bekommt ihn über das Protokoll für Credential-Helfer: Git ruft den Helfer mit <code>get</code> als Argument, schreibt Protokoll und Host auf die Standardeingabe, und der Helfer antwortet mit Benutzer und Zugang. Git merkt sich nichts, solange kein zweiter Helfer konfiguriert ist, der speichert; deshalb ist dieser der einzige.</p>
+<p>Das Werkzeug kennt genau zwei Pfade der Schnittstelle, geprüft als ganze Zeichenkette, und eine Installation ist eine Zahl; mit dem Stundenzugang arbeitet dann Git oder ein anderes Werkzeug. Hat die App mehrere Installationen, je Konto eine, nennt <code>GITHUB_APP_INSTALLATION</code> dem Helfer die richtige; ohne Angabe nimmt er die erste.</p>
 <div class="code"><div class="kopf"><b>github_zugang.py</b><span class="status ausgefuehrt">ausgeführt am 22.10.2026</span></div>
 <pre><code>#!/usr/bin/env python3
 &quot;&quot;&quot;Zugang zu GitHub ueber eine App: ein kurzlebiges JWT aus dem App-Schluessel, daraus ein Stundenzugang je Installation. Kein dauerhafter Token auf der Platte.
@@ -5179,7 +5237,8 @@ echo &quot;abgelegt: $ZIEL ($(stat -c &#x27;%a %U:%G&#x27; &quot;$ZIEL&quot;), $
 
 
 <h3>Schritt 3: Die Bestellung mit Journal</h3>
-<p>Vor dem Aufruf steht die Zeile im Journal, mit einem Schlüssel aus Auftrag und Laufnummer; dieselbe Bestellung ergibt denselben Schlüssel, und der geht als Idempotenz-Schlüssel an den Dienst. <code>BEGIN IMMEDIATE</code> lässt nur einen Schreiber zu. Antwortet der Dienst nicht, mit einem Fehler ab 500 oder mit etwas, das kein JSON ist, steht die Zeile auf «unklar», denn keiner dieser Fälle sagt, ob die Bestellung angekommen ist. Den Schlüssel des Dienstes liest allein dieses Werkzeug, aus seiner Zeile der Zugangsdatei; die erlaubte Adresse des Dienstes steht in der Bindung. Unklar wird nie automatisch neu bestellt, und eine Zeile, die auf «reserviert» stehen blieb, weil ein Lauf nach dem Journal abbrach, ebenso wenig; der Abgleich fragt beim Dienst nach und löst beides auf. Preis und Deckel je Auftrag kommen aus einer Bindung mit Preisbeleg, in Mikro-Dollar statt Gleitkommazahlen; ohne Beleg bestellt das Werkzeug nicht, und am Deckel hält es an; der Auftrag bleibt offen, bis jemand freigibt. Den Deckel im Konto des Anbieters setzt der Eigner im Dialog des Anbieters; er ist hier nicht nachgebaut.</p>
+<p>Vor dem Aufruf steht die Zeile im Journal, mit einem Schlüssel aus Auftrag und Laufnummer; dieselbe Bestellung ergibt denselben Schlüssel, und der geht als Idempotenz-Schlüssel an den Dienst. <code>BEGIN IMMEDIATE</code> lässt nur einen Schreiber zu. Antwortet der Dienst nicht, mit einem Fehler ab 500 oder mit etwas, das kein JSON ist, steht die Zeile auf «unklar», denn keiner dieser Fälle sagt, ob die Bestellung angekommen ist. Den Schlüssel des Dienstes liest allein dieses Werkzeug, aus seiner Zeile der Zugangsdatei; die erlaubte Adresse des Dienstes steht in der Bindung.</p>
+<p>Unklar wird nie automatisch neu bestellt, und eine Zeile, die auf «reserviert» stehen blieb, weil ein Lauf nach dem Journal abbrach, ebenso wenig; der Abgleich fragt beim Dienst nach und löst beides auf. Preis und Deckel je Auftrag kommen aus einer Bindung mit Preisbeleg, in Mikro-Dollar statt Gleitkommazahlen; ohne Beleg bestellt das Werkzeug nicht, und am Deckel hält es an; der Auftrag bleibt offen, bis jemand freigibt. Den Deckel im Konto des Anbieters setzt der Eigner im Dialog des Anbieters; er ist hier nicht nachgebaut.</p>
 <div class="code"><div class="kopf"><b>bindung.json</b><span class="status ausgefuehrt">ausgeführt am 22.10.2026</span></div>
 <pre><code>{
   &quot;preis_je_bild_usd&quot;: 0.25,
@@ -5392,7 +5451,18 @@ http.server.HTTPServer((&quot;127.0.0.1&quot;, int(sys.argv[1])), Handler).serve
 
 
 <div class="pruefung">
-<p><strong>So prüfst du es.</strong> Der Zugang: <code>--pruefen</code> nennt den Schlüssel als lesbar, eine Installation und einen Zugang von 40 Zeichen mit Ablauf in einer Stunde, nie den Wert. <code>git credential fill</code> mit dem Helfer liefert Benutzer und Zugang, in der Probe verdeckt; für einen anderen Host schweigt der Helfer, und Git fragt den nächsten. Ist die Schnittstelle nicht erreichbar oder antwortet sie ohne JSON, endet das Werkzeug mit «Abbruch» und ohne Stapelabzug. Ein JWT mit einem fremden Schlüssel ergibt 401 bei der Attrappe und einen Abbruch, ein Schlüssel, der nicht lesbar ist, einen Abbruch vor dem Aufruf; eine Installation wie <code>101/../x</code> bricht ab, ein Pfad ausserhalb der zwei erlaubten ebenso. Eine Suche über den Arbeitsordner nach dem Präfix der Zugänge trifft allein den Quelltext der Attrappe, die es bildet; kein Wert liegt in einer Datei, auch nicht im Protokoll der Attrappe. Das Register mit fünf Zeilen gegen einen Ordner mit zwei Schlüsseln, für die Probe ergänzt um eine Altlast ohne Zeile und ein Shell-Skript, das eine Zugangsdatei nennt und nirgends als Leser steht: Datei ohne Zeile, Zeile ohne Datei, Leser ohne Eintrag, ein Leser, der im Register steht und die Datei nicht nennt, ein unbekannter Ablauf und ein Ablauf in 40 Tagen; sechs Befunde, Rückgabe 77, der Bericht eine Zeile mit dem nächsten Ablauf. Das Ablage-Skript legt eine Zeile <code>NAME=wert</code> mit 0640 ab und einen Schlüssel im PEM-Format mit 28 Zeilen byte-gleich; es weist einen leeren Wert, einen Wert mit einer Pfeiltaste darin, einen Dateinamen mit <code>../</code> und eine Gruppe, die es nicht gibt, mit 2 ab, und im letzten Fall bleibt keine Datei liegen. Die Bestellung: Nummer 1 bestellt, Nummer 1 nochmals findet die Zeile und bestellt nicht; Nummer 2 gegen die hängende Attrappe endet auf «unklar» mit 69, der zweite Versuch bestellt nicht und endet mit 77, der Abgleich findet die Bestellung beim Dienst und setzt sie auf «bestellt»; Nummer 3 und 4 gehen durch, Nummer 5 hält am Deckel von einem Dollar an. Das Protokoll der Attrappe zeigt für diesen Auftrag vier Bestellungen und einen Abgleich. Eine von Hand auf «reserviert» gesetzte Zeile, wie sie ein abgebrochener Lauf hinterlässt, wird beim nächsten Lauf nicht bestellt; der Abgleich meldet «nie angekommen» und gibt die Reservation frei, danach geht die Bestellung durch. Eine Attrappe, die mit 503 antwortet, ergibt «unklar» mit 69 und keine zweite Bestellung; ein Dienst, der gar nicht erreichbar ist, ebenso, und auch ein Erfolgscode ohne das Feld für den Job, etwa 202 mit einer anderen Antwort. Fehlt die Zugangsdatei, bricht der Lauf ab, bevor eine Zeile im Journal steht. Alle Ergebnisse sind so gelaufen.</p>
+<p><strong>So prüfst du es.</strong></p>
+<ul>
+<li>Der Zugang: <code>--pruefen</code> nennt den Schlüssel als lesbar, eine Installation und einen Zugang von 40 Zeichen mit Ablauf in einer Stunde, nie den Wert. <code>git credential fill</code> mit dem Helfer liefert Benutzer und Zugang, in der Probe verdeckt; für einen anderen Host schweigt der Helfer, und Git fragt den nächsten. Ist die Schnittstelle nicht erreichbar oder antwortet sie ohne JSON, endet das Werkzeug mit «Abbruch» und ohne Stapelabzug. Ein JWT mit einem fremden Schlüssel ergibt 401 bei der Attrappe und einen Abbruch, ein Schlüssel, der nicht lesbar ist, einen Abbruch vor dem Aufruf; eine Installation wie <code>101/../x</code> bricht ab, ein Pfad ausserhalb der zwei erlaubten ebenso.</li>
+<li>Eine Suche über den Arbeitsordner nach dem Präfix der Zugänge trifft allein den Quelltext der Attrappe, die es bildet; kein Wert liegt in einer Datei, auch nicht im Protokoll der Attrappe.</li>
+<li>Das Register mit fünf Zeilen gegen einen Ordner mit zwei Schlüsseln, für die Probe ergänzt um eine Altlast ohne Zeile und ein Shell-Skript, das eine Zugangsdatei nennt und nirgends als Leser steht: Datei ohne Zeile, Zeile ohne Datei, Leser ohne Eintrag, ein Leser, der im Register steht und die Datei nicht nennt, ein unbekannter Ablauf und ein Ablauf in 40 Tagen; sechs Befunde, Rückgabe 77, der Bericht eine Zeile mit dem nächsten Ablauf.</li>
+<li>Das Ablage-Skript legt eine Zeile <code>NAME=wert</code> mit 0640 ab und einen Schlüssel im PEM-Format mit 28 Zeilen byte-gleich; es weist einen leeren Wert, einen Wert mit einer Pfeiltaste darin, einen Dateinamen mit <code>../</code> und eine Gruppe, die es nicht gibt, mit 2 ab, und im letzten Fall bleibt keine Datei liegen.</li>
+<li>Die Bestellung: Nummer 1 bestellt, Nummer 1 nochmals findet die Zeile und bestellt nicht; Nummer 2 gegen die hängende Attrappe endet auf «unklar» mit 69, der zweite Versuch bestellt nicht und endet mit 77, der Abgleich findet die Bestellung beim Dienst und setzt sie auf «bestellt»; Nummer 3 und 4 gehen durch, Nummer 5 hält am Deckel von einem Dollar an. Das Protokoll der Attrappe zeigt für diesen Auftrag vier Bestellungen und einen Abgleich.</li>
+<li>Eine von Hand auf «reserviert» gesetzte Zeile, wie sie ein abgebrochener Lauf hinterlässt, wird beim nächsten Lauf nicht bestellt; der Abgleich meldet «nie angekommen» und gibt die Reservation frei, danach geht die Bestellung durch.</li>
+<li>Eine Attrappe, die mit 503 antwortet, ergibt «unklar» mit 69 und keine zweite Bestellung; ein Dienst, der gar nicht erreichbar ist, ebenso, und auch ein Erfolgscode ohne das Feld für den Job, etwa 202 mit einer anderen Antwort.</li>
+<li>Fehlt die Zugangsdatei, bricht der Lauf ab, bevor eine Zeile im Journal steht.</li>
+</ul>
+<p>Alle Ergebnisse sind so gelaufen.</p>
 </div>
 
 <h3>Typische Fehler</h3>
@@ -5877,7 +5947,18 @@ if __name__ == &quot;__main__&quot;:
 
 
 <div class="pruefung">
-<p><strong>So prüfst du es.</strong> Die Beispielnotizen liegen in einem frischen Vault; der Lauf gilt dem 22.10.2026. Der Termin, den der Dienst mit 07:00 Weltzeit liefert, steht als 09:00 in der Zeitleiste. Die Lage nennt 4 h 30 am Stück ohne Termin, vier Termine, drei Aufgaben bis heute fällig, eine überfällig. Die Aufmerksamkeit zeigt fünf Punkte aus vier Klassen: die überfällige Aufgabe mit Tagen, die wartende mit ihrem Grund, eine Entscheidung mit Frist, die Vorbereitung auf das Meeting mit Kürzel samt dem Hub «Beispielprojekt - Hub», und eine zweite Entscheidung; die Reihenfolge folgt den Klassen. Der Tag zeigt drei freie Blöcke und vier Termine; eine Lücke von 15 Minuten erscheint nicht. Erledigen trägt zwei Aufgaben, Delegieren oder klären eine, Einplanen zwei, Diese Woche sonst zwei. Die Fusszeile nennt zwei Aufgaben ohne Datum, eine mit Datum nach dem Fenster und zwei datierte ohne Priorität. Der Versand legt die Mail mit dem Eigner als Empfänger in den Ausgang; ein anderer Empfänger bricht mit 1 ab und schreibt nichts; mit ausgefallenem Versand entsteht der Entwurf und die Betriebsmeldung, Rückgabe 69. Ein Kalender mit einer Zeit ohne Zone bricht ab. Ein leerer Kalender ergibt eine Seite mit zehn Stunden Fokus und einem einzigen freien Block in der Zeitleiste. Ein Kalender mit einem Termin um 18:30 zeigt ihn in der Zeitleiste, und der freie Block davor endet um 18:00. Alle Ergebnisse sind so gelaufen.</p>
+<p><strong>So prüfst du es.</strong> Die Beispielnotizen liegen in einem frischen Vault; der Lauf gilt dem 22.10.2026.</p>
+<ul>
+<li>Der Termin, den der Dienst mit 07:00 Weltzeit liefert, steht als 09:00 in der Zeitleiste.</li>
+<li>Die Lage nennt 4 h 30 am Stück ohne Termin, vier Termine, drei Aufgaben bis heute fällig, eine überfällig.</li>
+<li>Die Aufmerksamkeit zeigt fünf Punkte aus vier Klassen: die überfällige Aufgabe mit Tagen, die wartende mit ihrem Grund, eine Entscheidung mit Frist, die Vorbereitung auf das Meeting mit Kürzel samt dem Hub «Beispielprojekt - Hub», und eine zweite Entscheidung; die Reihenfolge folgt den Klassen.</li>
+<li>Der Tag zeigt drei freie Blöcke und vier Termine; eine Lücke von 15 Minuten erscheint nicht.</li>
+<li>Erledigen trägt zwei Aufgaben, Delegieren oder klären eine, Einplanen zwei, Diese Woche sonst zwei.</li>
+<li>Die Fusszeile nennt zwei Aufgaben ohne Datum, eine mit Datum nach dem Fenster und zwei datierte ohne Priorität.</li>
+<li>Der Versand legt die Mail mit dem Eigner als Empfänger in den Ausgang; ein anderer Empfänger bricht mit 1 ab und schreibt nichts; mit ausgefallenem Versand entsteht der Entwurf und die Betriebsmeldung, Rückgabe 69.</li>
+<li>Ein Kalender mit einer Zeit ohne Zone bricht ab. Ein leerer Kalender ergibt eine Seite mit zehn Stunden Fokus und einem einzigen freien Block in der Zeitleiste. Ein Kalender mit einem Termin um 18:30 zeigt ihn in der Zeitleiste, und der freie Block davor endet um 18:00.</li>
+</ul>
+<p>Alle Ergebnisse sind so gelaufen.</p>
 </div>
 
 <h3>Typische Fehler</h3>
@@ -5902,7 +5983,7 @@ if __name__ == &quot;__main__&quot;:
 <section id="kap-13" class="kapitel-abschnitt">
 <p class="augenbraue">Kapitel 13</p>
 <h1>Agenten</h1>
-<p class="einstieg">Ein Agent ist hier eine Stelle, an der ein Sprachmodell mit eigener Schleife arbeitet: mit Namen, Zweck, Grenzen und einem Menschen, der für sie verantwortlich ist. Das Register des Referenzsystems führt rund hundert solche Stellen, damit jede sichtbar ist: Agenten mit eigener Rolle wie der Assistent im Chat-Kanal und die Rollen der Desks, dazu Skills und Jobs mit Modellaufruf. Dieses Kapitel zeigt, wie ein Agent entsteht, wie er beschrieben, geprüft und abgenommen wird, und wie er besser werden darf, ohne sich selbst umzuschreiben.</p>
+<p class="einstieg">Ein Agent ist hier eine Stelle, an der ein Sprachmodell mit eigener Schleife arbeitet: mit Namen, Zweck, Grenzen und einem Menschen, der für sie verantwortlich ist. Das Register des Referenzsystems führt rund hundert solche Stellen, damit jede sichtbar ist: Agenten mit eigener Rolle wie der Assistent im Chat-Kanal und die Rollen der Desks, dazu Skills und Jobs mit Modellaufruf. Jede dieser Stellen entsteht nach demselben Ablauf: beschreiben, prüfen, abnehmen. Besser werden darf sie danach, ohne sich selbst umzuschreiben.</p>
 <div class="hinweis"><p><strong>Überblick und Vertiefung.</strong> Wie eine einzelne Stelle Schritt für Schritt geplant, gebaut, gesichert, abgenommen und verbessert wird, vertieft der eigene Lehrgang <a href="Second Brain Agentenbau.html">Second Brain Agentenbau</a>. Er liegt im selben Ordner wie diese Datei. Beide beschreiben dasselbe Referenzsystem und werden gegeneinander geprüft.</p></div>
 
 <h2><span class="rolle">Prinzip</span>Erst prüfen, ob es überhaupt ein Agent ist</h2>
@@ -5995,7 +6076,25 @@ if __name__ == &quot;__main__&quot;:
 <h3>Ablauf vor Laufzeit</h3>
 <p>Wer mit der Rolle beginnt, baut einen «Marketing-Agenten». Wer mit dem Ablauf beginnt, sieht vier Stellen: Themen sammeln und verdichten, einen Entwurf schreiben, veröffentlichen und die Wirkung auswerten. Das Veröffentlichen übernimmt die Freigabestrecke ohne eigenen Agenten. Eine Stelle ist, wo sich Zuständigkeit, Wissen oder Rechte ändern. Für den Ablauf gibt es eine Testfrage: <strong>Geht zwischen zwei Schritten etwas verloren, das nicht in eine Datei passt?</strong> Passt alles in eine Datei, genügt eine Vorgangsnotiz mit Status, und ein weiterlaufender Prozess entfällt.</p>
 <h3>Laufzeit und Zone</h3>
-<p>Acht Fragen entscheiden, worauf eine Stelle läuft: Braucht sie eine eigene Schleife mit Modellaufrufen? Wer spricht sie an, ein Mensch, ein Zeitplan oder ein anderer Agent? Sieht sie Fremdinhalt? Wirkt sie nach aussen? Muss eine Entscheidung im Programmcode fallen? Was kostet sie und aus welchem Kontingent? Woraus arbeitet sie, und wie kommt sie an dieses Wissen? Hat sie Zustand zwischen zwei Läufen, und wo liegt er? Daraus folgt die Laufzeit. Vier Auflagen gelten immer: Zugänge liegen nie beim Agenten; Fremdinhalt sehen und nach aussen wirken schliessen sich im selben Agenten aus; eine Assistenten-Plattform bekommt ein eigenes Systemkonto und darf ihre Fähigkeiten und ihr Gedächtnis nur mit Freigabe ändern; Modell und Denktiefe sind Pflicht, samt der Frage, wann ein Lauf das gemeinsame Kontingent belastet. Eine Zusatzfrage zur dritten Frage klärt, welche Vertraulichkeitsklasse das Kundenmaterial höchstens hat, das eine Stelle sieht; für die beiden höchsten Klassen wird auf dem Wissens-Server keine Stelle gebaut.</p>
+<p>Acht Fragen entscheiden, worauf eine Stelle läuft:</p>
+<ol>
+<li>Braucht sie eine eigene Schleife mit Modellaufrufen?</li>
+<li>Wer spricht sie an, ein Mensch, ein Zeitplan oder ein anderer Agent?</li>
+<li>Sieht sie Fremdinhalt?</li>
+<li>Wirkt sie nach aussen?</li>
+<li>Muss eine Entscheidung im Programmcode fallen?</li>
+<li>Was kostet sie und aus welchem Kontingent?</li>
+<li>Woraus arbeitet sie, und wie kommt sie an dieses Wissen?</li>
+<li>Hat sie Zustand zwischen zwei Läufen, und wo liegt er?</li>
+</ol>
+<p>Daraus folgt die Laufzeit. Vier Auflagen gelten immer:</p>
+<ul>
+<li>Zugänge liegen nie beim Agenten.</li>
+<li>Fremdinhalt sehen und nach aussen wirken schliessen sich im selben Agenten aus.</li>
+<li>Eine Assistenten-Plattform bekommt ein eigenes Systemkonto und darf ihre Fähigkeiten und ihr Gedächtnis nur mit Freigabe ändern.</li>
+<li>Modell und Denktiefe sind Pflicht, samt der Frage, wann ein Lauf das gemeinsame Kontingent belastet.</li>
+</ul>
+<p>Eine Zusatzfrage zur dritten Frage klärt, welche Vertraulichkeitsklasse das Kundenmaterial höchstens hat, das eine Stelle sieht; für die beiden höchsten Klassen wird auf dem Wissens-Server keine Stelle gebaut.</p>
 <h3>Wissen und Zustand</h3>
 <p>Sechs Fragen klären, woher eine Stelle ihr Wissen bekommt: wer es braucht, wann es ankommen muss, ob die Herkunft belegbar sein muss, wer es ändern darf, ob es Fremdinhalt ist und wie viel es ist und wie oft es gelesen wird. Heraus kommen eine oder mehrere von sechs Bauformen, vom einfachen Verweis auf eine Notiz im Vault bis zum eigenen Lernkreislauf. Die beiden schwersten Formen, ein gemeinsamer Index und ein Lernkreislauf, verlangen je drei erfüllte Bedingungen. Ein Index ist ein zweiter Speicher, der driftet, und ein Lernkreislauf kehrt die Schreibrichtung um. Das Schema wurde rückwärts geprüft: Es kommt für zwei bereits gebaute Systeme auf genau die Architektur, die dort gewachsen war.</p>
 
@@ -6061,7 +6160,7 @@ if __name__ == &quot;__main__&quot;:
 <p>Fünf Schichten halten das auseinander: die Identität, die geschützt ist; das Wissen, auf das sie verweist; der Lauf, der flüchtig ist; die Erfahrung, die nur über Freigaben wächst; und die Ausführung, die im Backend liegt. Kein Agent schreibt in eine dieser Schichten. Er arbeitet nur im Kontext seines Laufs, der danach verfällt; das Protokoll über den Lauf, die Laufspur, schreibt der Aufrufer.</p>
 
 <h2><span class="rolle">Beispiel</span>Der Assistent im Chat-Kanal</h2>
-<p>Das ausgebaute Beispiel im Referenzsystem ist ein Assistent im Teams-Kanal des Eigners. Er liest das Vault, beantwortet Fragen zu Kalender, Posteingang, Aufgaben und Kontakten, erledigt Sekretariatsaufgaben auf direkten Auftrag und nimmt Aufträge für die Desks aus Kapitel 12 entgegen. Seine Datei ist die Vorlage, nach der alle anderen Akten gebaut sind.</p>
+<p>Das ausgebaute Beispiel im Referenzsystem ist ein Assistent im Chat-Kanal des Eigners. Er liest das Vault, beantwortet Fragen zu Kalender, Posteingang, Aufgaben und Kontakten, erledigt Sekretariatsaufgaben auf direkten Auftrag und nimmt Aufträge für die Desks aus Kapitel 12 entgegen. Seine Datei ist die Vorlage, nach der alle anderen Akten gebaut sind.</p>
 <figure>
 <div class="flaeche">
 <svg viewBox="0 10 960 460" role="img" aria-label="Aufbau des Assistenten im Chat-Kanal: Ein Abholer im Backend holt neue Nachrichten des Eigners ab und gibt sie eingezäunt an einen kurzlebigen Modellprozess ohne Schlüssel. Dieser gibt nur Antworttext an den Versand, der als eigenes Dienstkonto antwortet, oder einen Auftrag mit festen Feldern an einen Ausführer, der Rolle, Felder und Empfänger prüft und in den Fremdsystemen handelt.">
@@ -6141,7 +6240,7 @@ if __name__ == &quot;__main__&quot;:
 <thead><tr><th>Befund</th><th>Lehre</th></tr></thead>
 <tbody>
 <tr><td>Ende August 2026 war die Regel «wer nicht im Register steht, existiert nicht» entschieden, aber kein Register gebaut. Nach der eigenen Regel gab es damit keinen einzigen Agenten.</td><td>Ein Entscheid ohne Mechanismus ist eine Absichtserklärung. Das Register entstand als erstes.</td></tr>
-<tr><td>Ein Schema führte gültige Werte nur in einer Bemerkung. Eine Agentendatei mit «autonom» ging still durch.</td><td>Ein Schema, das aussieht wie ein Riegel und keiner ist, ist schlechter als keines.</td></tr>
+<tr><td>Ein Schema führte gültige Werte nur in einer Bemerkung. Eine Akte mit «autonom» ging still durch.</td><td>Ein Schema, das aussieht wie ein Riegel und keiner ist, ist schlechter als keines.</td></tr>
 <tr><td>Eine öffentliche Registry für KI-Werkzeuge führt dieselben Statusfelder. Hunderte tote Einträge standen dort auf «aktiv».</td><td>Ein Statusfeld ohne Abgleich verschiebt die Falschaussage nur von der Liste in das Feld.</td></tr>
 <tr><td>Die Herstellerdokumentation versprach, ein Agent könne mit Anwendungszugang in einen Kanal schreiben. Ein Test von einer halben Stunde widerlegte das, bevor ein Kanal ohne Ausgang gebaut war.</td><td>Den riskantesten Teil zuerst messen.</td></tr>
 <tr><td>Eine Prüfung meldete zweimal einen Schalter als eingeschaltet. Sie leitete den Zustand aus dem Verhalten eines Dienstes ab.</td><td>Wer einen Zustand ableitet, misst den Beobachter. Gelesen wird der Zustand selbst.</td></tr>
@@ -6152,14 +6251,14 @@ if __name__ == &quot;__main__&quot;:
 </table></div>
 
 <div class="werkstatt" id="werkstatt-13">
-<h2><span class="rolle">Werkstatt</span>Agentenakte, Wache und Abnahmefälle</h2>
-<p><strong>Ziel:</strong> ein Schema für die Agentenakte mit Wertelisten, ein Register der Träger, eine Akte als Vorlage, eine Wache, die jede Akte gegen das Schema prüft, und Abnahmefälle als Dateien mit einem Prüfstand, der sie gegen eine Stelle fährt, Negativfälle dreimal, und das Ergebnis an Version und Text der Akte bindet.</p>
+<h2><span class="rolle">Werkstatt</span>Akte, Wache und Abnahmefälle</h2>
+<p><strong>Ziel:</strong> ein Schema für die Akte mit Wertelisten, ein Register der Träger, eine Akte als Vorlage, eine Wache, die jede Akte gegen das Schema prüft, und Abnahmefälle als Dateien mit einem Prüfstand, der sie gegen eine Stelle fährt, Negativfälle dreimal, und das Ergebnis an Version und Text der Akte bindet.</p>
 <p><strong>Du brauchst:</strong> Python 3. Die Stelle ist hier eine Attrappe ohne Modell, die ihre Grenzen hält und zwei Schalter hat, mit denen sie sie bricht; so zeigt der Prüfstand, dass er Rot erkennt. Im Betrieb ist die Stelle der Modellaufruf aus Kapitel 6 mit Identität, Zaun und einem Wegwerf-Ausführer, dessen Auftragsdateien der Beleg sind. Was das Modell selbst tut, misst nur ein echter Lauf, und der kostet; die Attrappe misst den Prüfstand.</p>
 
 <h3>Schritt 1: Schema und Träger</h3>
 <p>Das Schema ist eine Tabelle, die zwei Leser teilen, die Wache und das Register. Felder und Abschnitte, je mit Pflichtgrad: alle, nur bei Aussenkontakt (erkannt am Rufnamen) oder nur vom Eigner gesetzt. Erlaubte Werte stehen in einer eigenen Spalte ohne Prosa; eine Werteliste in der Bemerkung prüft niemand, und «autonom» ginge still durch. Gegenüber dem Referenzsystem ist das Schema gekürzt; der Kopf sagt, um welche Felder. Das Träger-Register nennt je Mechanismus, ob er gebaut oder geplant ist.</p>
 <div class="code"><div class="kopf"><b>agenten-schema.tsv</b><span class="status ausgefuehrt">ausgeführt am 22.10.2026</span></div>
-<pre><code># Schema der Agentenakte. Eine Datei, zwei Leser: die Wache beim Schreiben und das Register.
+<pre><code># Schema der Akte. Eine Datei, zwei Leser: die Wache beim Schreiben und das Register.
 # art: feld | abschnitt.  pflicht: alle | aussenkontakt (erkannt an rufname:) | eigner (setzt nur der Eigner; fehlt es, kein Befund)
 # werte: abschliessende Liste mit |, ohne Prosa. Ein Feld ohne werte wird im Wert nicht geprueft.
 # Gekuerzt gegenueber dem Referenzsystem: dort kommen zone, tools, vertretung, wissen und die Zonen-Werte dazu.
@@ -6281,7 +6380,7 @@ Kein Lob, kein Dank, keine Frage nach einem Go.
 <p>Sie prüft, ob jede Frage beantwortet ist: Pflichtfelder, Werte, Abschnitte in der Soll-Reihenfolge, Träger je Grenze gegen das Register, die Abbruchzeile, bei Aussenkontakt beide Sprachen im Stil, die sieben Angaben zum Besserwerden, jede auf ihrer eigenen Zeile, ein Status ausser «aktiv» nur mit Grund und Datum. Und sie prüft die Abnahme: Sie gilt für genau eine Version, und sie darf nicht stehen, solange ein genannter Träger nur geplant ist. Ob eine Antwort taugt, bleibt ein Urteil und beim Eigner.</p>
 <div class="code"><div class="kopf"><b>agenten_wache.py</b><span class="status ausgefuehrt">ausgeführt am 22.10.2026</span></div>
 <pre><code>#!/usr/bin/env python3
-&quot;&quot;&quot;Prueft eine Agentenakte gegen das Schema: Felder, Werte, Abschnitte in Reihenfolge, Traeger je Grenze, Abbruchzeile, Abnahme je Version, Lebenslauf. Meldet, aendert nichts.
+&quot;&quot;&quot;Prueft eine Akte gegen das Schema: Felder, Werte, Abschnitte in Reihenfolge, Traeger je Grenze, Abbruchzeile, Abnahme je Version, Lebenszyklus. Meldet, aendert nichts.
 
     agenten_wache.py &lt;akte.md&gt; [&lt;akte.md&gt; ...]
 
@@ -6376,7 +6475,7 @@ def pruefen(pfad):
             b.append(f&quot;abgenommen gilt v{m.group(1)}, die Akte ist v{felder.get(&#x27;version&#x27;)}: neu abnehmen&quot;)
         if geplant:
             b.append(f&quot;abgenommen, obwohl Träger nur geplant: {&#x27;, &#x27;.join(sorted(geplant))}&quot;)
-    # Lebenslauf
+    # Lebenszyklus
     status = felder.get(&quot;status&quot;, &quot;aktiv&quot;)
     if status != &quot;aktiv&quot;:
         for f in (&quot;status_grund&quot;, &quot;status_seit&quot;):
@@ -6608,7 +6707,17 @@ print(json.dumps({&quot;antwort&quot;: &quot; &quot;.join(saetze) or &quot;Ich s
 
 
 <div class="pruefung">
-<p><strong>So prüfst du es.</strong> Die Wache auf der Akte: 0 Befunde. Zwölf Varianten derselben Akte, je ein Befund, beim Status zwei: «autonom» als Wert, eine Grenze ohne Träger, ein Träger, der nicht im Register steht, ein Träger, der nur geplant ist, neben einer Abnahme, «Prosa» ohne Grund, keine Abbruchzeile, Stil nur auf Deutsch, die siebte Angabe leer, eine mittlere Angabe leer, Abschnitte in falscher Reihenfolge, ein Status «stillgelegt» ohne Grund und ohne Datum, und eine Akte v3 mit einer Abnahme für v2. Eine Variante mit anderem Modell und gleicher Version hat bei der Wache keinen Befund; dass sie keine Abnahme hat, zeigt erst der Prüfstand. Der Prüfstand mit der Attrappe, zuerst auf der Akte ohne das Feld <code>abgenommen</code>: sechs Fälle, vierzehn Läufe, alle grün, Ergebnis für v2 geschrieben, <code>--stand</code> sagt «Abnahme gilt» und nennt die Prüfsumme. Trägt der Eigner danach <code>abgenommen</code> ein, gilt sie weiter, mit derselben Prüfsumme. Ein Fall mit einer unbekannten Art ist ein Mangel, und der Prüfstand fährt nicht. Mit dem Schalter, der Anweisungen im Material befolgt, wird der Negativfall in allen drei Läufen rot, weil ein Auftrag entsteht und die Anweisung nicht benannt wird; die Gegenprobe bleibt grün, und <code>--stand</code> sagt «nicht bestanden». Mit dem Schalter, der rät, wird der Fall zum Raten dreimal rot. Eine Stelle, die ohne Ausgabe endet, macht jeden Fall rot. Nach einem grünen Lauf für v2 sagt <code>--stand</code> für die Akte v3 «veraltet», und ebenso für die Akte v2 mit geändertem Modell, weil die Prüfsumme abweicht. Fehlt die Gegenprobe zum Negativfall, meldet der Prüfstand einen Mangel und fährt nicht, Rückgabe 2. Alle Ergebnisse sind so gelaufen.</p>
+<p><strong>So prüfst du es.</strong></p>
+<ul>
+<li>Die Wache auf der Akte: 0 Befunde. Zwölf Varianten derselben Akte, je ein Befund, beim Status zwei: «autonom» als Wert, eine Grenze ohne Träger, ein Träger, der nicht im Register steht, ein Träger, der nur geplant ist, neben einer Abnahme, «Prosa» ohne Grund, keine Abbruchzeile, Stil nur auf Deutsch, die siebte Angabe leer, eine mittlere Angabe leer, Abschnitte in falscher Reihenfolge, ein Status «stillgelegt» ohne Grund und ohne Datum, und eine Akte v3 mit einer Abnahme für v2. Eine Variante mit anderem Modell und gleicher Version hat bei der Wache keinen Befund; dass sie keine Abnahme hat, zeigt erst der Prüfstand.</li>
+<li>Der Prüfstand mit der Attrappe, zuerst auf der Akte ohne das Feld <code>abgenommen</code>: sechs Fälle, vierzehn Läufe, alle grün, Ergebnis für v2 geschrieben, <code>--stand</code> sagt «Abnahme gilt» und nennt die Prüfsumme. Trägt der Eigner danach <code>abgenommen</code> ein, gilt sie weiter, mit derselben Prüfsumme.</li>
+<li>Ein Fall mit einer unbekannten Art ist ein Mangel, und der Prüfstand fährt nicht.</li>
+<li>Mit dem Schalter, der Anweisungen im Material befolgt, wird der Negativfall in allen drei Läufen rot, weil ein Auftrag entsteht und die Anweisung nicht benannt wird; die Gegenprobe bleibt grün, und <code>--stand</code> sagt «nicht bestanden». Mit dem Schalter, der rät, wird der Fall zum Raten dreimal rot.</li>
+<li>Eine Stelle, die ohne Ausgabe endet, macht jeden Fall rot.</li>
+<li>Nach einem grünen Lauf für v2 sagt <code>--stand</code> für die Akte v3 «veraltet», und ebenso für die Akte v2 mit geändertem Modell, weil die Prüfsumme abweicht.</li>
+<li>Fehlt die Gegenprobe zum Negativfall, meldet der Prüfstand einen Mangel und fährt nicht, Rückgabe 2.</li>
+</ul>
+<p>Alle Ergebnisse sind so gelaufen.</p>
 </div>
 
 <h3>Typische Fehler</h3>
@@ -6624,7 +6733,7 @@ print(json.dumps({&quot;antwort&quot;: &quot; &quot;.join(saetze) or &quot;Ich s
 <ol>
 <li>Bei jedem Wunsch nach einem Agenten zuerst fragen, ob ein Skript oder ein einzelner Modellaufruf genügt. Meistens genügt es.</li>
 <li>Den Ablauf aufzeichnen und die Stellen daraus ablesen, bevor über Laufzeit oder Modell gesprochen wird.</li>
-<li>Ein maschinenlesbares Schema für Agentendateien anlegen, mit Wertelisten, und eine Wache, die beim Schreiben prüft.</li>
+<li>Ein maschinenlesbares Schema für Akten anlegen, mit Wertelisten, und eine Wache, die beim Schreiben prüft.</li>
 <li>Das Register von einem Skript erzeugen lassen. Seine Quellenliste kennen und bei jedem neuen Agenten nachzählen.</li>
 <li>Für jede Grenze den Träger nennen. Was nur im Prompt steht, als Prosa kennzeichnen und nicht als Sicherheit zählen.</li>
 <li>Schlüssel und Ausführung ins Backend, dem Modell nur benannte Aktionen mit festen Feldern zeigen.</li>
@@ -6799,7 +6908,9 @@ print(json.dumps({&quot;antwort&quot;: &quot; &quot;.join(saetze) or &quot;Ich s
 <p><strong>Du brauchst:</strong> ein Vault unter Git nach Kapitel 3, Python 3, <code>du</code> und <code>flock</code>; Hülle meint hier die Sperr-Hülle aus Kapitel 5. Die Zahlen der Prüfung gelten für ein frisches Vault nur mit den Beispielnotizen aus der Werkstatt in Kapitel 12 und den vier Notizen aus dem Shell-Block hier. Die Startprobe löst hier die Nabe aus Kapitel 4, die Sperre aus Kapitel 5, das private Netz und einen Referenz-Port aus; was auf der eigenen Maschine fehlt, meldet sie als ungeprüft statt als grün.</p>
 
 <h3>Schritt 1: Die Hygiene-Messung</h3>
-<p>Eine Quelle je Zahl: tote und mehrdeutige Verweise, Notizen ohne das Pflichtfeld <code>source</code>, verwaiste Notizen. Der Parser nimmt Verweise nur aus dem Rumpf und nie aus Code, löst Anhänge über den Dateinamen mit Endung und Verweise mit Ordner über den Namen auf, und ein Selbsttest hält die bekannten Messfehler fest: maskierte Alias-Striche, Verweise in Code, Listen im Datenkopf, Anhänge, Ordnerpfade. Die Zeitreihe liegt im Vault; die Fassung der Messung steht in jeder Zeile, und ein Wechsel schreibt eine Bruchzeile davor, damit niemand eine neue Zählweise als Verfall liest. Repariert wird nur auf Befehl, von Hand in der Sperr-Hülle, und nur, was auf der Positivliste steht: ein toter Verweis, für den es genau eine Datei gibt, die sich allein in der Schreibung unterscheidet, auch wenn der Verweis einen Ordner voranstellt; der Ordner fällt dabei weg, weil das Ziel über den Namen eindeutig ist. Verweise in Code bleiben, wie sie sind, und eine Datei ohne echte Änderung wird weder gemeldet noch committet. Obsidian löst so einen Verweis selbst auf, Git, grep und jedes Werkzeug ausserhalb von Obsidian nicht; gemessen wird, was auf der Platte steht. Warteraum und Archiv fasst die Reparatur nie an. Der Commit nimmt nur die geänderten Dateien. Die Zeitreihe committet die Nachernte der Sperr-Hülle, in der der Job läuft, und dort bekommt er auch seine Zeile im Register.</p>
+<p>Eine Quelle je Zahl: tote und mehrdeutige Verweise, Notizen ohne das Pflichtfeld <code>source</code>, verwaiste Notizen. Der Parser nimmt Verweise nur aus dem Rumpf und nie aus Code, löst Anhänge über den Dateinamen mit Endung und Verweise mit Ordner über den Namen auf, und ein Selbsttest hält die bekannten Messfehler fest: maskierte Alias-Striche, Verweise in Code, Listen im Datenkopf, Anhänge, Ordnerpfade. Die Zeitreihe liegt im Vault; die Fassung der Messung steht in jeder Zeile, und ein Wechsel schreibt eine Bruchzeile davor, damit niemand eine neue Zählweise als Verfall liest.</p>
+<p>Repariert wird nur auf Befehl, von Hand in der Sperr-Hülle, und nur, was auf der Positivliste steht: ein toter Verweis, für den es genau eine Datei gibt, die sich allein in der Schreibung unterscheidet, auch wenn der Verweis einen Ordner voranstellt; der Ordner fällt dabei weg, weil das Ziel über den Namen eindeutig ist. Verweise in Code bleiben, wie sie sind, und eine Datei ohne echte Änderung wird weder gemeldet noch committet.</p>
+<p>Obsidian löst so einen Verweis selbst auf, Git, grep und jedes Werkzeug ausserhalb von Obsidian nicht; gemessen wird, was auf der Platte steht. Warteraum und Archiv fasst die Reparatur nie an. Der Commit nimmt nur die geänderten Dateien. Die Zeitreihe committet die Nachernte der Sperr-Hülle, in der der Job läuft, und dort bekommt er auch seine Zeile im Register.</p>
 <div class="code"><div class="kopf"><b>hygiene.py</b><span class="status ausgefuehrt">ausgeführt am 22.10.2026</span></div>
 <pre><code>#!/usr/bin/env python3
 &quot;&quot;&quot;Hygiene-Messung des Vaults ohne Modell: tote und mehrdeutige Verweise, fehlendes Pflichtfeld, verwaiste Notizen. Misst immer, repariert nur nach Positivliste und nur auf Befehl.
@@ -7263,7 +7374,17 @@ einem Jahr niemand gebraucht hat, ist ein Runbook, dem man nicht trauen sollte.<
 
 
 <div class="pruefung">
-<p><strong>So prüfst du es.</strong> Der Selbsttest des Parsers ist grün, mit einem Anhang und einem Ordnerpfad, die nicht als tot zählen. Die Messung über das frische Vault mit elf Notizen nennt zwei tote Verweise, beide reparabel, weil es die Zieldatei kleingeschrieben gibt, einen mehrdeutigen Verweis auf zwei Dateien gleichen Namens, eine Notiz ohne <code>source</code> und acht verwaiste. Dazu eine Notiz im Warteraum mit demselben toten Verweis und eine Notiz, die ihn mit Ordner davor und einmal in Code trägt: Die Messung nennt vier tote Verweise, die Reparatur schreibt drei Dateien um, lässt die im Warteraum aus, rührt den Verweis im Code nicht an und committet genau drei Dateien; die Messung danach nennt einen toten Verweis, den im Warteraum, und ein zweiter Reparaturlauf ändert nichts. Die Zeitreihe trägt alle Zeilen, und eine Messung mit hochgezählter Fassung schreibt die Bruchzeile vor ihre Zeile. Die Platz-Wache meldet auf dieser Maschine 79 Prozent und OK; nach drei Megabyte Ballast und einem Ordner mit zurückgesetztem Datum nennt der zweite Lauf den Zuwachs auf zwei Ebenen und den Altstand mit 20 Tagen, Rückgabe weiter 0. Der Bericht ist eine Zeile aus dem Schnappschuss. Die Probe findet keinen löschenden Aufruf, erkennt alle vier Varianten, erhält bei 50, 85 und 95 Prozent OK, Hinweis und Alarm und findet den Altstand im Testordner. Die Startprobe gegen Nabe, Sperre, Cron, privates Netz, Lebenszeichen-Ordner und einen Port, der zu sein soll, mit offener Referenz: sechsmal OK; die Zeile ohne Referenz ist ungeprüft, Rückgabe 78. Ohne den Referenz-Dienst wird auch die Port-Zeile ungeprüft, und gegen einen Pfad, den es nicht gibt, melden Nabe, Sperre und Lebenszeichen-Ordner FEHLER. Alle Ergebnisse sind so gelaufen.</p>
+<p><strong>So prüfst du es.</strong></p>
+<ul>
+<li>Der Selbsttest des Parsers ist grün, mit einem Anhang und einem Ordnerpfad, die nicht als tot zählen.</li>
+<li>Die Messung über das frische Vault mit elf Notizen nennt zwei tote Verweise, beide reparabel, weil es die Zieldatei kleingeschrieben gibt, einen mehrdeutigen Verweis auf zwei Dateien gleichen Namens, eine Notiz ohne <code>source</code> und acht verwaiste.</li>
+<li>Dazu eine Notiz im Warteraum mit demselben toten Verweis und eine Notiz, die ihn mit Ordner davor und einmal in Code trägt: Die Messung nennt vier tote Verweise, die Reparatur schreibt drei Dateien um, lässt die im Warteraum aus, rührt den Verweis im Code nicht an und committet genau drei Dateien; die Messung danach nennt einen toten Verweis, den im Warteraum, und ein zweiter Reparaturlauf ändert nichts.</li>
+<li>Die Zeitreihe trägt alle Zeilen, und eine Messung mit hochgezählter Fassung schreibt die Bruchzeile vor ihre Zeile.</li>
+<li>Die Platz-Wache meldet auf dieser Maschine 79 Prozent und OK; nach drei Megabyte Ballast und einem Ordner mit zurückgesetztem Datum nennt der zweite Lauf den Zuwachs auf zwei Ebenen und den Altstand mit 20 Tagen, Rückgabe weiter 0. Der Bericht ist eine Zeile aus dem Schnappschuss.</li>
+<li>Die Probe findet keinen löschenden Aufruf, erkennt alle vier Varianten, erhält bei 50, 85 und 95 Prozent OK, Hinweis und Alarm und findet den Altstand im Testordner.</li>
+<li>Die Startprobe gegen Nabe, Sperre, Cron, privates Netz, Lebenszeichen-Ordner und einen Port, der zu sein soll, mit offener Referenz: sechsmal OK; die Zeile ohne Referenz ist ungeprüft, Rückgabe 78. Ohne den Referenz-Dienst wird auch die Port-Zeile ungeprüft, und gegen einen Pfad, den es nicht gibt, melden Nabe, Sperre und Lebenszeichen-Ordner FEHLER.</li>
+</ul>
+<p>Alle Ergebnisse sind so gelaufen.</p>
 </div>
 
 <h3>Typische Fehler</h3>
@@ -7707,7 +7828,7 @@ git rev-parse --git-path hooks/pre-commit   # muss githooks/pre-commit zeigen</c
 <tr><td>Freigabestrecke</td><td>Der Weg eines maschinellen Vorschlags bis zur Wirkung: Zeile in einer Liste, Karte in Teams, Antwort des Eigners, Umsetzung auf dem Server.</td><td>8</td></tr>
 <tr><td>Fremdinhalt</td><td>Alles, was nicht vom Eigner stammt: Mails, Transkripte, Webseiten, Dokumente, Ausgaben anderer Werkzeuge. Wird gelesen, nie befolgt.</td><td>8</td></tr>
 <tr><td>Governance-Datei</td><td>Die Datei eines Projekts, Bereichs oder Vorgangs mit den Festlegungen, wie es an Werkzeuge und Menschen ausserhalb des Vaults angebunden ist: Backlog-Werkzeug, Ablagen, Teilnehmende.</td><td>3</td></tr>
-<tr><td>Graph-API</td><td>Programmierschnittstelle von Microsoft 365, über die Jobs Teams, Planner, Kalender und Ablage lesen und schreiben.</td><td>0, 9</td></tr>
+<tr><td>Graph-API</td><td>Programmierschnittstelle von Microsoft 365, über die Jobs Teams, Planner, Kalender und Ablage lesen und schreiben.</td><td>E, 9</td></tr>
 <tr><td>Herkunftsetikett</td><td>Feld im Datenkopf, das maschinell abgeholte Dateien als von aussen eingelesen kennzeichnet. Fehlt es, gilt die Datei als Fremdinhalt.</td><td>2, 8</td></tr>
 <tr><td>Hook</td><td>Ein Programm, das ein anderes Programm an einem festen Punkt selbst aufruft: das KI-Werkzeug vor oder nach einer Aktion, Git vor einem Commit oder nach einem Push. Damit lassen sich Regeln mechanisch durchsetzen.</td><td>7</td></tr>
 <tr><td>Hülle</td><td>Ein Startskript, das einen Job umschliesst; die äussere schreibt das Lebenszeichen, die innere hält die Sperre und macht die Nachernte.</td><td>5</td></tr>
@@ -7720,7 +7841,7 @@ git rev-parse --git-path hooks/pre-commit   # muss githooks/pre-commit zeigen</c
 <tr><td>Lebenszeichen</td><td>Der Zeitstempel des letzten Laufs eines Jobs, getrennt nach Erfolg und Fehlschlag.</td><td>5</td></tr>
 <tr><td>Nachernte</td><td>Der Schritt nach einem Job, der genau die Dateien committet, die sich seit Laufbeginn geändert haben.</td><td>5</td></tr>
 <tr><td>Nabe</td><td>Das nackte Repository auf dem Server, gegen das jeder Klon pusht und von dem er zieht.</td><td>1, 4</td></tr>
-<tr><td>Obsidian</td><td>Ein Markdown-Editor, der einen Ordner als Notizsammlung öffnet. Im Referenzsystem der Leser und Schreiber auf dem Laptop, austauschbar.</td><td>0, 1</td></tr>
+<tr><td>Obsidian</td><td>Ein Markdown-Editor, der einen Ordner als Notizsammlung öffnet. Im Referenzsystem der Leser und Schreiber auf dem Laptop, austauschbar.</td><td>E, 1</td></tr>
 <tr><td>Prüftor</td><td>Ein Programm vor jedem Commit, das ihn bei einem Verstoss abweist. Eines für das Vault, eines für den Plattform-Code.</td><td>5</td></tr>
 <tr><td>Referenzmessung</td><td>Derselbe Prüfbefehl gegen einen Fall, der nachweislich positiv ausfällt. Ohne sie beweist ein negatives Ergebnis nichts.</td><td>4, 15</td></tr>
 <tr><td>Regelwerk</td><td>Die Anweisungsdatei, die ein KI-Werkzeug bei jeder Sitzung lädt. Kurz gehalten; das Detail steht in weiteren Dateien, die nur bei Bedarf geladen werden.</td><td>7</td></tr>
@@ -7792,14 +7913,14 @@ git rev-parse --git-path hooks/pre-commit   # muss githooks/pre-commit zeigen</c
 <tr><td class="zahl">029</td><td>Personen-Kürzel bei der Anlage, Ordner beim ersten Meeting</td><td>13.08.2026</td><td>entschieden</td></tr>
 <tr><td class="zahl">030</td><td>Abschluss in beide Richtungen für Checklisten in Hubs</td><td>13.08.2026</td><td>entschieden</td></tr>
 <tr><td class="zahl">031</td><td>Projekte in Slack: Kanal, Liste und Canvas statt Team, Plan und Notizbuch</td><td>13.08.2026</td><td>entschieden</td></tr>
-<tr><td class="zahl">032</td><td>Verknüpfen und melden statt fragen</td><td>15.08.2026</td><td>entschieden</td></tr>
+<tr><td class="zahl">032</td><td>Verknüpfen und melden, ohne Rückfrage</td><td>15.08.2026</td><td>entschieden</td></tr>
 <tr><td class="zahl">033</td><td>Zaun für Fremdmaterial und Kette der Etiketten</td><td>16.08.2026</td><td>entschieden</td></tr>
-<tr><td class="zahl">034</td><td>Kalender auf dem Tablet: kaufen statt bauen, kein Rückweg</td><td>16.08.2026</td><td>entschieden</td></tr>
+<tr><td class="zahl">034</td><td>Kalender auf dem Tablet: ein gekauftes Produkt, ohne Rückweg</td><td>16.08.2026</td><td>entschieden</td></tr>
 <tr><td class="zahl">035</td><td>Handschriftliche Notizbücher: das Vault hält das Original</td><td>16.08.2026</td><td>entschieden</td></tr>
 <tr><td class="zahl">036</td><td>Vierter Kürzel-Baum: persönliche Notizen</td><td>16.08.2026</td><td>entschieden</td></tr>
 <tr><td class="zahl">037</td><td>Übersichtskarten aus Microsoft 365 ins Vault</td><td>17.08.2026</td><td>revidiert</td></tr>
 <tr><td class="zahl">038</td><td>Drei Knöpfe: der Kommentar wird zur Anweisung</td><td>17.08.2026</td><td>entschieden</td></tr>
-<tr><td class="zahl">039</td><td>Das Wortprotokoll ergänzt; die Deckung wird angezeigt, nicht garantiert</td><td>19.08.2026</td><td>entschieden</td></tr>
+<tr><td class="zahl">039</td><td>Das Wortprotokoll ergänzt; die Deckung wird angezeigt, ohne Garantie</td><td>19.08.2026</td><td>entschieden</td></tr>
 <tr><td class="zahl">040</td><td>Wandert ein Skill in ein Produkt, verlässt er das Skill-Repository</td><td>21.08.2026</td><td>entschieden</td></tr>
 <tr><td class="zahl">041</td><td>Rückweg vom Backlog-Werkzeug in den Projektplan</td><td>21.08.2026</td><td>entschieden</td></tr>
 <tr><td class="zahl">042</td><td>Gegenprobe gegen das Transkript</td><td>21.08.2026</td><td>entschieden</td></tr>

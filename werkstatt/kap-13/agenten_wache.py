@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prueft eine Agentenakte gegen das Schema: Felder, Werte, Abschnitte in Reihenfolge, Traeger je Grenze, Abbruchzeile, Abnahme je Version, Lebenslauf. Meldet, aendert nichts.
+"""Prueft eine Akte gegen das Schema: Felder, Werte, Abschnitte in Reihenfolge, Traeger je Grenze, Abbruchzeile, Abnahme je Version, Lebenszyklus. Meldet, aendert nichts.
 
     agenten_wache.py <akte.md> [<akte.md> ...]
 
@@ -94,7 +94,7 @@ def pruefen(pfad):
             b.append(f"abgenommen gilt v{m.group(1)}, die Akte ist v{felder.get('version')}: neu abnehmen")
         if geplant:
             b.append(f"abgenommen, obwohl Träger nur geplant: {', '.join(sorted(geplant))}")
-    # Lebenslauf
+    # Lebenszyklus
     status = felder.get("status", "aktiv")
     if status != "aktiv":
         for f in ("status_grund", "status_seit"):

@@ -1,4 +1,4 @@
-# Schema der Agentenakte. Eine Datei, zwei Leser: die Wache beim Schreiben und das Register.
+# Schema der Akte. Eine Datei, zwei Leser: die Wache beim Schreiben und das Register.
 # art: feld | abschnitt.  pflicht: alle | aussenkontakt (erkannt an rufname:) | eigner (setzt nur der Eigner; fehlt es, kein Befund)
 # werte: abschliessende Liste mit |, ohne Prosa. Ein Feld ohne werte wird im Wert nicht geprueft.
 # Gekuerzt gegenueber dem Referenzsystem: dort kommen zone, tools, vertretung, wissen und die Zonen-Werte dazu.
